@@ -2,6 +2,7 @@
 
 A Go library for parsing and rendering reStructuredText (RST) documents with translation support.
 Supports only a subset of restructuredText for now, but relatively easy to expand compared to other attempts.
+It is mostly unrelated to previous attempts to parse restructuredText in Go.
 
 ## Features
 
@@ -71,6 +72,8 @@ func main() {
 ## Documentation
 
 For more detailed information about adding new node types or contributing to the project, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+For information about rst feature coverage see: [CHECKLIST.md](CHECKLIST.md)
 
 ## License
 

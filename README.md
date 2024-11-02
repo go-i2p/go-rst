@@ -1,6 +1,7 @@
 # go-rst
 
 A Go library for parsing and rendering reStructuredText (RST) documents with translation support.
+Supports only a subset of restructuredText for now, but relatively easy to expand compared to other attempts.
 
 ## Features
 

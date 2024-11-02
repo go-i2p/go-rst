@@ -15,7 +15,8 @@ func main() {
 	// CLI flags
 	rstFile := flag.String("rst", "", "Input RST file path")
 	poFile := flag.String("po", "", "Input PO file path for translations")
-	outFile := flag.String("out", "", "Output HTML file path")
+	outFileFormat := flag.String("out-format", "html", "Output file format (html, pdf, markdown)")
+	outFile := flag.String("out", "", "Output file path")
 	debug := flag.Bool("debug", false, "Enable debug logging")
 	flag.Parse()
 
@@ -65,17 +66,40 @@ func main() {
 		log.Printf("Parsed %d nodes", len(nodes))
 	}
 
-	// Initialize HTML renderer
-	r := renderer.NewHTMLRenderer()
+	switch *outFileFormat {
+	case "html":
+		// Initialize HTML renderer
+		r := renderer.NewHTMLRenderer()
 
-	// Render HTML
-	html := r.RenderPretty(nodes)
+		// Render HTML
+		html := r.RenderPretty(nodes)
+		WriteRendered(*outFile, []byte(html))
+	case "pdf":
+		// Initialize PDF renderer
+		r := renderer.NewPDFRenderer()
+		// Render PDF
+		err := r.Render(nodes)
+		if err != nil {
+			log.Fatalf("Failed to render PDF: %v", err)
+		}
+		r.SaveToFile(*outFile)
+	case "markdown":
+		// Initialize Markdown renderer
+		r := renderer.NewMarkdownRenderer()
+		// Render Markdown
+		err := r.Render(nodes)
+		if err != nil {
+			log.Fatalf("Failed to render Markdown: %v", err)
+		}
+		WriteRendered(*outFile, []byte(r.String()))
+	}
+	fmt.Printf("Successfully converted %s to %s\n", *rstFile, *outFile)
+}
 
+func WriteRendered(outFile string, doc []byte) {
 	// Write output
-	err = ioutil.WriteFile(*outFile, []byte(html), 0o644)
+	err := ioutil.WriteFile(outFile, []byte(doc), 0o644)
 	if err != nil {
 		log.Fatalf("Failed to write HTML file: %v", err)
 	}
-
-	fmt.Printf("Successfully converted %s to %s\n", *rstFile, *outFile)
 }

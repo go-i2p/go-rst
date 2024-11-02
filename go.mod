@@ -3,6 +3,7 @@ module i2pgit.org/idk/go-rst
 go 1.23.1
 
 require (
+	github.com/jung-kurt/gofpdf v1.16.2
 	github.com/leonelquinteros/gotext v1.7.0
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4
 )

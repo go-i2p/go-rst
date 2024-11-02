@@ -10,14 +10,14 @@ import (
 type TokenType int
 
 const (
-	TokenText TokenType = iota // TokenText represents a regular text token.
-	TokenHeadingUnderline // TokenHeadingUnderline represents a heading underline token.
-	TokenTransBlock // TokenTransBlock represents a transition block token.
-	TokenMeta // TokenMeta represents a metadata token.
-	TokenDirective // TokenDirective represents a directive token.
-	TokenCodeBlock // TokenCodeBlock represents a code block token.
-	TokenBlankLine // TokenBlankLine represents a blank line token.
-	TokenIndent // TokenIndent represents an indent token.
+	TokenText             TokenType = iota // TokenText represents a regular text token.
+	TokenHeadingUnderline                  // TokenHeadingUnderline represents a heading underline token.
+	TokenTransBlock                        // TokenTransBlock represents a transition block token.
+	TokenMeta                              // TokenMeta represents a metadata token.
+	TokenDirective                         // TokenDirective represents a directive token.
+	TokenCodeBlock                         // TokenCodeBlock represents a code block token.
+	TokenBlankLine                         // TokenBlankLine represents a blank line token.
+	TokenIndent                            // TokenIndent represents an indent token.
 )
 
 // Token represents a single token in the input text.

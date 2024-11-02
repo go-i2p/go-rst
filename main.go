@@ -69,7 +69,7 @@ func main() {
     r := renderer.NewHTMLRenderer()
 
     // Render HTML
-    html := r.Render(nodes)
+    html := r.RenderPretty(nodes)
 
     // Write output
     err = ioutil.WriteFile(*outFile, []byte(html), 0644)

@@ -8,6 +8,7 @@ import (
 	"html"
 	"strings"
 
+	"github.com/yosssi/gohtml"
 	"i2pgit.org/idk/go-rst/pkg/nodes"
 )
 
@@ -147,4 +148,13 @@ func (r *HTMLRenderer) renderDirective(directive *nodes.DirectiveNode) {
         r.buffer.WriteString(fmt.Sprintf("<div class=\"warning\">%s</div>\n",
             html.EscapeString(directive.RawContent())))
     }
+}
+func (r *HTMLRenderer) RenderPretty(nodes []nodes.Node) string {
+    // First get the regular HTML output
+    rawHTML := r.Render(nodes)
+    
+    // Let gohtml handle the formatting
+    prettyHTML := gohtml.Format(rawHTML)
+    
+    return prettyHTML
 }

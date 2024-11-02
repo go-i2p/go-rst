@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Test\n"
+"POT-Creation-Date: 2024-01-20 12:00-0500\n"
+"PO-Revision-Date: 2024-01-20 12:00-0500\n"
+"Last-Translator: Alex\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "This text will be translated"
+msgstr "Este texto será traducido"
+
+msgid "Another translatable section"
+msgstr "Otra sección traducible"

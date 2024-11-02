@@ -10,6 +10,7 @@ import (
 	"i2pgit.org/idk/go-rst/pkg/translator"
 )
 
+// Parser is a struct that holds the state of the parser.
 type Parser struct {
 	nodes      []nodes.Node
 	translator translator.Translator
@@ -18,6 +19,7 @@ type Parser struct {
 	lexer      *Lexer
 }
 
+// NewParser creates a new Parser instance.
 func NewParser(trans translator.Translator) *Parser {
 	return &Parser{
 		nodes:      make([]nodes.Node, 0),
@@ -28,51 +30,52 @@ func NewParser(trans translator.Translator) *Parser {
 	}
 }
 
+// Parse takes a string of reStructuredText content and returns a slice of Node instances.
 func (p *Parser) Parse(content string) []nodes.Node {
-    scanner := bufio.NewScanner(strings.NewReader(content))
-    var currentNode nodes.Node
-    var prevToken Token
-    p.nodes = make([]nodes.Node, 0) // Clear existing nodes
+	scanner := bufio.NewScanner(strings.NewReader(content))
+	var currentNode nodes.Node
+	var prevToken Token
+	p.nodes = make([]nodes.Node, 0) // Clear existing nodes
 
-    for scanner.Scan() {
-        line := scanner.Text()
-        token := p.lexer.Tokenize(line)
-        
-        if newNode := p.processToken(token, prevToken, currentNode); newNode != nil {
-            // Only append if we actually have a new node
-            if currentNode != nil && currentNode != newNode {
-                p.nodes = append(p.nodes, currentNode)
-            }
-            currentNode = newNode
-        }
-        prevToken = token
-    }
+	for scanner.Scan() {
+		line := scanner.Text()
+		token := p.lexer.Tokenize(line)
 
-    // Add final node if exists and not already added
-    if currentNode != nil && (len(p.nodes) == 0 || p.nodes[len(p.nodes)-1] != currentNode) {
-        p.nodes = append(p.nodes, currentNode)
-    }
+		if newNode := p.processToken(token, prevToken, currentNode); newNode != nil {
+			// Only append if we actually have a new node
+			if currentNode != nil && currentNode != newNode {
+				p.nodes = append(p.nodes, currentNode)
+			}
+			currentNode = newNode
+		}
+		prevToken = token
+	}
 
-    return p.nodes
+	// Add final node if exists and not already added
+	if currentNode != nil && (len(p.nodes) == 0 || p.nodes[len(p.nodes)-1] != currentNode) {
+		p.nodes = append(p.nodes, currentNode)
+	}
+
+	return p.nodes
 }
 
 func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) nodes.Node {
-    //translatedContent := p.translator.Translate(token.Content)
-    //token.Content = translatedContent
+	// translatedContent := p.translator.Translate(token.Content)
+	// token.Content = translatedContent
 	switch token.Type {
-    case TokenTransBlock:
-        // Always create a new node for translation blocks
-        translatedContent := p.translator.Translate(strings.TrimSpace(token.Content))
-        return nodes.NewParagraphNode(translatedContent)
+	case TokenTransBlock:
+		// Always create a new node for translation blocks
+		translatedContent := p.translator.Translate(strings.TrimSpace(token.Content))
+		return nodes.NewParagraphNode(translatedContent)
 	case TokenHeadingUnderline:
 		if prevToken.Type == TokenText {
 			return p.processHeading(prevToken.Content, token.Content)
 		}
-	
+
 	case TokenMeta:
 		p.context.inMeta = true
 		return nodes.NewMetaNode("", "")
-	
+
 	case TokenCodeBlock:
 		p.context.inCodeBlock = true
 		p.context.codeBlockIndent = 4
@@ -81,12 +84,12 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 			language = token.Args[0]
 		}
 		return nodes.NewCodeNode(language, "", false)
-	
+
 	case TokenDirective:
 		p.context.inDirective = true
 		p.context.currentDirective = token.Content
 		return nodes.NewDirectiveNode(token.Content, token.Args)
-	
+
 	case TokenText:
 		if p.context.inCodeBlock {
 			return p.processCodeBlock(token.Content, currentNode)
@@ -129,7 +132,7 @@ func (p *Parser) processMetaContent(line string, currentNode nodes.Node) nodes.N
 
 	key := strings.TrimSpace(parts[0])
 	value := strings.TrimSpace(parts[1])
-	
+
 	node := nodes.NewMetaNode(key, value)
 	p.nodes = append(p.nodes, node)
 	p.context.inMeta = false
@@ -142,7 +145,7 @@ func (p *Parser) processCodeBlock(line string, currentNode nodes.Node) nodes.Nod
 	}
 
 	p.context.buffer = append(p.context.buffer, line)
-	
+
 	if strings.TrimSpace(line) == "" {
 		codeNode := currentNode.(*nodes.CodeNode)
 		content := strings.Join(p.context.buffer, "\n")
@@ -162,7 +165,7 @@ func (p *Parser) processDirectiveContent(line string, currentNode nodes.Node) no
 
 	directiveNode := currentNode.(*nodes.DirectiveNode)
 	p.context.buffer = append(p.context.buffer, line)
-	
+
 	if strings.TrimSpace(line) == "" {
 		content := strings.Join(p.context.buffer, "\n")
 		directiveNode.SetRawContent(content)

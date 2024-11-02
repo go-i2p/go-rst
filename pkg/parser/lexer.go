@@ -6,35 +6,40 @@ import (
 	"strings"
 )
 
+// TokenType represents the type of a token.
 type TokenType int
 
 const (
-	TokenText TokenType = iota
-	TokenHeadingUnderline
-	TokenTransBlock
-	TokenMeta
-	TokenDirective
-	TokenCodeBlock
-	TokenBlankLine
-	TokenIndent
+	TokenText TokenType = iota // TokenText represents a regular text token.
+	TokenHeadingUnderline // TokenHeadingUnderline represents a heading underline token.
+	TokenTransBlock // TokenTransBlock represents a transition block token.
+	TokenMeta // TokenMeta represents a metadata token.
+	TokenDirective // TokenDirective represents a directive token.
+	TokenCodeBlock // TokenCodeBlock represents a code block token.
+	TokenBlankLine // TokenBlankLine represents a blank line token.
+	TokenIndent // TokenIndent represents an indent token.
 )
 
+// Token represents a single token in the input text.
 type Token struct {
 	Type    TokenType
 	Content string
 	Args    []string
 }
 
+// Lexer represents a lexer for the input text.
 type Lexer struct {
 	patterns *Patterns
 }
 
+// NewLexer creates a new Lexer instance.
 func NewLexer() *Lexer {
 	return &Lexer{
 		patterns: NewPatterns(),
 	}
 }
 
+// Tokenize tokenizes a single line of input text.
 func (l *Lexer) Tokenize(line string) Token {
 	// Handle blank lines
 	if strings.TrimSpace(line) == "" {
@@ -109,7 +114,7 @@ func parseDirectiveArgs(line string) []string {
 	if len(parts) != 2 {
 		return nil
 	}
-	
+
 	args := strings.Fields(strings.TrimSpace(parts[1]))
 	return args
 }

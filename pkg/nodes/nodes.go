@@ -12,6 +12,7 @@ type HeadingNode struct {
 	*BaseNode
 }
 
+// NewHeadingNode creates a new HeadingNode with the given content and level
 func NewHeadingNode(content string, level int) *HeadingNode {
 	node := &HeadingNode{
 		BaseNode: NewBaseNode(NodeHeading),
@@ -26,6 +27,7 @@ type ParagraphNode struct {
 	*BaseNode
 }
 
+// NewParagraphNode creates a new ParagraphNode with the given content
 func NewParagraphNode(content string) *ParagraphNode {
 	node := &ParagraphNode{
 		BaseNode: NewBaseNode(NodeParagraph),
@@ -40,6 +42,7 @@ type ListNode struct {
 	ordered bool
 }
 
+// NewListNode creates a new ListNode with the given ordered flag
 func NewListNode(ordered bool) *ListNode {
 	node := &ListNode{
 		BaseNode: NewBaseNode(NodeList),
@@ -48,6 +51,7 @@ func NewListNode(ordered bool) *ListNode {
 	return node
 }
 
+// IsOrdered returns true if the list is ordered, false otherwise
 func (n *ListNode) IsOrdered() bool {
 	return n.ordered
 }
@@ -57,6 +61,7 @@ type ListItemNode struct {
 	*BaseNode
 }
 
+// NewListItemNode creates a new ListItemNode with the given content
 func NewListItemNode(content string) *ListItemNode {
 	node := &ListItemNode{
 		BaseNode: NewBaseNode(NodeListItem),
@@ -72,6 +77,7 @@ type LinkNode struct {
 	title string
 }
 
+// NewLinkNode creates a new LinkNode with the given text, URL, and title
 func NewLinkNode(text, url, title string) *LinkNode {
 	node := &LinkNode{
 		BaseNode: NewBaseNode(NodeLink),
@@ -82,7 +88,10 @@ func NewLinkNode(text, url, title string) *LinkNode {
 	return node
 }
 
-func (n *LinkNode) URL() string   { return n.url }
+// URL returns the URL of the link
+func (n *LinkNode) URL() string { return n.url }
+
+// Title returns the URL of the link
 func (n *LinkNode) Title() string { return n.title }
 
 // EmphasisNode represents emphasized text (italic)
@@ -90,6 +99,7 @@ type EmphasisNode struct {
 	*BaseNode
 }
 
+// NewEmphasisNode creates a new EmphasisNode with the given content
 func NewEmphasisNode(content string) *EmphasisNode {
 	node := &EmphasisNode{
 		BaseNode: NewBaseNode(NodeEmphasis),
@@ -103,6 +113,7 @@ type StrongNode struct {
 	*BaseNode
 }
 
+// NewStrongNode creates a new StrongNode with the given content
 func NewStrongNode(content string) *StrongNode {
 	node := &StrongNode{
 		BaseNode: NewBaseNode(NodeStrong),
@@ -117,6 +128,7 @@ type MetaNode struct {
 	key string
 }
 
+// NewMetaNode creates a new MetaNode with the given key and value
 func NewMetaNode(key, value string) *MetaNode {
 	node := &MetaNode{
 		BaseNode: NewBaseNode(NodeMeta),
@@ -126,6 +138,7 @@ func NewMetaNode(key, value string) *MetaNode {
 	return node
 }
 
+// Key returns the key of the metadata
 func (n *MetaNode) Key() string { return n.key }
 
 // DirectiveNode represents an RST directive
@@ -136,6 +149,7 @@ type DirectiveNode struct {
 	rawContent string
 }
 
+// NewDirectiveNode creates a new DirectiveNode with the given name and arguments
 func NewDirectiveNode(name string, args []string) *DirectiveNode {
 	node := &DirectiveNode{
 		BaseNode:   NewBaseNode(NodeDirective),
@@ -146,9 +160,16 @@ func NewDirectiveNode(name string, args []string) *DirectiveNode {
 	return node
 }
 
-func (n *DirectiveNode) Name() string        { return n.name }
+// Name returns the name of the directive
+func (n *DirectiveNode) Name() string { return n.name }
+
+// Arguments returns the arguments of the directive
 func (n *DirectiveNode) Arguments() []string { return n.arguments }
-func (n *DirectiveNode) RawContent() string  { return n.rawContent }
+
+// RawContent returns the raw content of the directive
+func (n *DirectiveNode) RawContent() string { return n.rawContent }
+
+// SetRawContent sets the raw content of the directive
 func (n *DirectiveNode) SetRawContent(content string) {
 	n.rawContent = content
 }
@@ -160,6 +181,7 @@ type CodeNode struct {
 	lineNumbers bool
 }
 
+// NewCodeNode creates a new CodeNode with the given language and content
 func NewCodeNode(language string, content string, lineNumbers bool) *CodeNode {
 	node := &CodeNode{
 		BaseNode:    NewBaseNode(NodeCode),
@@ -170,8 +192,11 @@ func NewCodeNode(language string, content string, lineNumbers bool) *CodeNode {
 	return node
 }
 
-func (n *CodeNode) Language() string    { return n.language }
-func (n *CodeNode) LineNumbers() bool   { return n.lineNumbers }
+// Language returns the language of the code block
+func (n *CodeNode) Language() string { return n.language }
+
+// LineNumbers returns the line numbers flag of the code block
+func (n *CodeNode) LineNumbers() bool { return n.lineNumbers }
 
 // TableNode represents a table structure
 type TableNode struct {
@@ -180,6 +205,7 @@ type TableNode struct {
 	rows    [][]string
 }
 
+// NewTableNode creates a new TableNode
 func NewTableNode() *TableNode {
 	return &TableNode{
 		BaseNode: NewBaseNode(NodeTable),
@@ -188,18 +214,23 @@ func NewTableNode() *TableNode {
 	}
 }
 
+// SetHeaders sets the headers of the table
 func (n *TableNode) SetHeaders(headers []string) {
 	n.headers = headers
 }
 
+// AddRow adds a row to the table
 func (n *TableNode) AddRow(row []string) {
 	n.rows = append(n.rows, row)
 }
 
-func (n *TableNode) Headers() []string   { return n.headers }
-func (n *TableNode) Rows() [][]string    { return n.rows }
+// Headers returns the headers of the table
+func (n *TableNode) Headers() []string { return n.headers }
 
-// Utility function to get node content with proper indentation
+// Rows returns the rows of the table
+func (n *TableNode) Rows() [][]string { return n.rows }
+
+// GetIndentedContent Utility function to get node content with proper indentation
 func GetIndentedContent(node Node) string {
 	content := node.Content()
 	if node.Level() > 0 {
@@ -218,10 +249,12 @@ func (n *HeadingNode) String() string {
 	return fmt.Sprintf("Heading[%d]: %s", n.Level(), n.Content())
 }
 
+// String representation for debugging
 func (n *ParagraphNode) String() string {
 	return fmt.Sprintf("Paragraph: %s", n.Content())
 }
 
+// String representation for debugging
 func (n *ListNode) String() string {
 	listType := "Unordered"
 	if n.ordered {
@@ -230,19 +263,22 @@ func (n *ListNode) String() string {
 	return fmt.Sprintf("%s List with %d items", listType, len(n.Children()))
 }
 
+// String representation for debugging
 func (n *LinkNode) String() string {
 	return fmt.Sprintf("Link[%s](%s)", n.Content(), n.url)
 }
 
+// String representation for debugging
 func (n *DirectiveNode) String() string {
 	return fmt.Sprintf("Directive[%s]: %s", n.name, n.Content())
 }
 
+// String representation for debugging
 func (n *CodeNode) String() string {
 	return fmt.Sprintf("Code[%s]: %d bytes", n.language, len(n.Content()))
 }
 
+// String representation for debugging
 func (n *TableNode) String() string {
 	return fmt.Sprintf("Table: %d columns x %d rows", len(n.headers), len(n.rows))
 }
-

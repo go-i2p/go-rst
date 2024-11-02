@@ -84,3 +84,4 @@ MIT License
 This project uses:
 - [gotext](https://github.com/leonelquinteros/gotext) for PO file handling
 - [gohtml](https://github.com/yosssi/gohtml) for HTML prettifying
+- [gofpdf](github.com/jung-kurt/gofpdf) for PDF generation

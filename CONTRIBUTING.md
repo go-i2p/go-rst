@@ -119,7 +119,7 @@ func (r *HTMLRenderer) renderYourNewNode(node *nodes.YourNewNode) string {
 ### 5. Testing
 
 1. Add test cases in appropriate test files
-2. Create example RST documents showcasing your new node type
+2. Create or modify example RST documents showcasing your new node type
 3. Verify translation handling if applicable
 
 ### Best Practices

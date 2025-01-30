@@ -155,6 +155,28 @@ func (n *CodeNode) String() string
 ```
 String representation for debugging
 
+#### type CommentNode
+
+```go
+type CommentNode struct {
+	*BaseNode
+}
+```
+
+CommentNode represents RST comments starting with ..
+
+#### func  NewCommentNode
+
+```go
+func NewCommentNode(content string) *CommentNode
+```
+
+#### func (*CommentNode) String
+
+```go
+func (n *CommentNode) String() string
+```
+
 #### type DirectiveNode
 
 ```go
@@ -281,6 +303,34 @@ NewHeadingNode creates a new HeadingNode with the given content and level
 func (n *HeadingNode) String() string
 ```
 String representations for debugging
+
+#### type LineBlockNode
+
+```go
+type LineBlockNode struct {
+	*BaseNode
+}
+```
+
+LineBlockNode represents poetry-style line blocks that preserve line breaks
+
+#### func  NewLineBlockNode
+
+```go
+func NewLineBlockNode(lines []string) *LineBlockNode
+```
+
+#### func (*LineBlockNode) Lines
+
+```go
+func (n *LineBlockNode) Lines() []string
+```
+
+#### func (*LineBlockNode) String
+
+```go
+func (n *LineBlockNode) String() string
+```
 
 #### type LinkNode
 
@@ -438,6 +488,10 @@ const (
 	NodeTable                      // Represents a table structure
 	NodeBlockQuote                 // Represents a block quote
 	NodeDoctest                    // Represents a doctest block
+	NodeLineBlock                  // Represents a line block
+	NodeComment                    // Represents a comment
+	NodeTitle                      // Represents a document title
+	NodeSubtitle                   // Represents a document subtitle
 )
 ```
 Node type constants define the possible types of nodes in the RST document tree
@@ -482,6 +536,27 @@ StrongNode represents strong text (bold)
 func NewStrongNode(content string) *StrongNode
 ```
 NewStrongNode creates a new StrongNode with the given content
+
+#### type SubtitleNode
+
+```go
+type SubtitleNode struct {
+	*BaseNode
+}
+```
+
+
+#### func  NewSubtitleNode
+
+```go
+func NewSubtitleNode(content string) *SubtitleNode
+```
+
+#### func (*SubtitleNode) String
+
+```go
+func (n *SubtitleNode) String() string
+```
 
 #### type TableNode
 
@@ -534,3 +609,30 @@ SetHeaders sets the headers of the table
 func (n *TableNode) String() string
 ```
 String representation for debugging
+
+#### type TitleNode
+
+```go
+type TitleNode struct {
+	*BaseNode
+}
+```
+
+
+#### func  NewTitleNode
+
+```go
+func NewTitleNode(content string, level int) *TitleNode
+```
+
+#### func (*TitleNode) Level
+
+```go
+func (n *TitleNode) Level() int
+```
+
+#### func (*TitleNode) String
+
+```go
+func (n *TitleNode) String() string
+```

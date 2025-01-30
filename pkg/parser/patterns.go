@@ -33,7 +33,7 @@ func NewPatterns() *Patterns {
 		doctest:          regexp.MustCompile(`^>>> (.+)\n((?:[^>].*\n)*)`),
 		lineBlock:        regexp.MustCompile(`^\|(.*)$`),
 		comment:          regexp.MustCompile(`^\.\.\s(.*)$`),
-		title:            regexp.MustCompile(`^(={3,}|~{3,})\n(.+?)\n\1$`),
-		subtitle:         regexp.MustCompile(`^(-{3,})\n(.+?)\n\1$`),
+		title:            regexp.MustCompile(`^(={3,}|~{3,})\n(.+?)\n(?:={3,}|~{3,})$`),
+		subtitle:         regexp.MustCompile(`^(-{3,})\n(.+?)\n(?:-{3,})$`),
 	}
 }

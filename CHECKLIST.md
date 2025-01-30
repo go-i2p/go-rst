@@ -6,7 +6,7 @@
 - [x] Nesting/Hierarchy support
 - [x] Basic content management
 - [X] Document title/subtitle
-- [ ] Transitions (horizontal lines)
+- [X] Transitions (horizontal lines)
 
 ## ✅ Text Styling
 - [x] Strong (bold) text

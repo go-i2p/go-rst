@@ -360,3 +360,16 @@ func (n *LineBlockNode) Lines() []string {
 func (n *LineBlockNode) String() string {
 	return fmt.Sprintf("LineBlock: %d lines", len(n.lines))
 }
+
+// CommentNode represents RST comments starting with ..
+type CommentNode struct {
+	*BaseNode
+}
+
+func NewCommentNode(content string) *CommentNode {
+	node := &CommentNode{
+		BaseNode: NewBaseNode(NodeComment),
+	}
+	node.SetContent(content)
+	return node
+}

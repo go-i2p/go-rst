@@ -2,7 +2,9 @@
 
 package parser
 
-import "regexp"
+import (
+	"regexp"
+)
 
 // Patterns holds compiled regular expressions for parsing Markdown syntax.
 type Patterns struct {
@@ -14,6 +16,7 @@ type Patterns struct {
 	blockQuote       *regexp.Regexp
 	doctest          *regexp.Regexp
 	lineBlock        *regexp.Regexp
+	comment          *regexp.Regexp
 }
 
 // NewPatterns initializes and returns a new instance of Patterns with compiled regular expressions.
@@ -27,5 +30,6 @@ func NewPatterns() *Patterns {
 		blockQuote:       regexp.MustCompile(`^(\s{4,})(.*?)(?:\s*--\s*(.*))?$`),
 		doctest:          regexp.MustCompile(`^>>> (.+)\n((?:[^>].*\n)*)`),
 		lineBlock:        regexp.MustCompile(`^\|(.*)$`),
+		comment:          regexp.MustCompile(`^\.\.\s(.*)$`),
 	}
 }

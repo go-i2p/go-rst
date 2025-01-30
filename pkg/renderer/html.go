@@ -129,6 +129,10 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 			r.buffer.WriteString("</div>\n")
 		}
 		r.buffer.WriteString("</div>\n")
+	case *nodes.CommentNode:
+		r.buffer.WriteString("<!-- ")
+		r.buffer.WriteString(html.EscapeString(n.Content()))
+		r.buffer.WriteString(" -->\n")
 	}
 }
 

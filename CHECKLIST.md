@@ -65,7 +65,7 @@
 ### Document Components
 - [X] Block quotes
 - [X] Doctest blocks
-- [ ] Line blocks
+- [X] Line blocks
 - [ ] Comments
 
 ### Advanced Features

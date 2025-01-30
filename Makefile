@@ -12,3 +12,4 @@ build:
 test: build
 	./go-rst -rst example/doc.rst -out example/example.html
 	./go-rst -rst example/complexDoc.rst -out example/complexExample.html
+	./go-rst -rst example/rstSpec.rst -out example/rstSpec.html

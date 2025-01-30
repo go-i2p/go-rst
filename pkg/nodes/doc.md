@@ -1,6 +1,6 @@
 # nodes
 --
-    import "i2pgit.org/idk/go-rst/pkg/nodes"
+    import "github.com/go-i2p/go-rst/pkg/nodes"
 
 
 ## Usage
@@ -86,6 +86,37 @@ func (n *BaseNode) Type() NodeType
 ```
 Type returns the NodeType
 
+#### type BlockQuoteNode
+
+```go
+type BlockQuoteNode struct {
+	*BaseNode
+}
+```
+
+BlockQuoteNode represents an indented block quote
+
+#### func  NewBlockQuoteNode
+
+```go
+func NewBlockQuoteNode(content, attribution string) *BlockQuoteNode
+```
+NewBlockQuoteNode creates a new BlockQuoteNode with the given content
+
+#### func (*BlockQuoteNode) Attribution
+
+```go
+func (n *BlockQuoteNode) Attribution() string
+```
+Attribution returns the quote attribution if any
+
+#### func (*BlockQuoteNode) String
+
+```go
+func (n *BlockQuoteNode) String() string
+```
+String representation for debugging
+
 #### type CodeNode
 
 ```go
@@ -99,7 +130,7 @@ CodeNode represents a code block
 #### func  NewCodeNode
 
 ```go
-func NewCodeNode(language string, content string, lineNumbers bool) *CodeNode
+func NewCodeNode(language, content string, lineNumbers bool) *CodeNode
 ```
 NewCodeNode creates a new CodeNode with the given language and content
 
@@ -175,6 +206,40 @@ SetRawContent sets the raw content of the directive
 func (n *DirectiveNode) String() string
 ```
 String representation for debugging
+
+#### type DoctestNode
+
+```go
+type DoctestNode struct {
+	*BaseNode
+}
+```
+
+DoctestNode represents a doctest block with expected output
+
+#### func  NewDoctestNode
+
+```go
+func NewDoctestNode(command, expected string) *DoctestNode
+```
+
+#### func (*DoctestNode) Command
+
+```go
+func (n *DoctestNode) Command() string
+```
+
+#### func (*DoctestNode) Expected
+
+```go
+func (n *DoctestNode) Expected() string
+```
+
+#### func (*DoctestNode) String
+
+```go
+func (n *DoctestNode) String() string
+```
 
 #### type EmphasisNode
 
@@ -360,17 +425,19 @@ NodeType represents the type of a node in the RST document structure
 
 ```go
 const (
-	NodeHeading   NodeType = iota // Represents a section heading
-	NodeParagraph                 // Represents a text paragraph
-	NodeList                      // Represents an ordered or unordered list
-	NodeListItem                  // Represents an item within a list
-	NodeLink                      // Represents a hyperlink
-	NodeEmphasis                  // Represents emphasized (italic) text
-	NodeStrong                    // Represents strong (bold) text
-	NodeMeta                      // Represents metadata information
-	NodeDirective                 // Represents an RST directive
-	NodeCode                      // Represents a code block
-	NodeTable                     // Represents a table structure
+	NodeHeading    NodeType = iota // Represents a section heading
+	NodeParagraph                  // Represents a text paragraph
+	NodeList                       // Represents an ordered or unordered list
+	NodeListItem                   // Represents an item within a list
+	NodeLink                       // Represents a hyperlink
+	NodeEmphasis                   // Represents emphasized (italic) text
+	NodeStrong                     // Represents strong (bold) text
+	NodeMeta                       // Represents metadata information
+	NodeDirective                  // Represents an RST directive
+	NodeCode                       // Represents a code block
+	NodeTable                      // Represents a table structure
+	NodeBlockQuote                 // Represents a block quote
+	NodeDoctest                    // Represents a doctest block
 )
 ```
 Node type constants define the possible types of nodes in the RST document tree

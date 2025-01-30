@@ -19,6 +19,7 @@ const (
 	NodeCode                       // Represents a code block
 	NodeTable                      // Represents a table structure
 	NodeBlockQuote                 // Represents a block quote
+	NodeDoctest                    // Represents a doctest block
 )
 
 // Node interface defines the common behavior for all RST document nodes

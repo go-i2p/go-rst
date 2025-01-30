@@ -1,6 +1,6 @@
 # parser
 --
-    import "i2pgit.org/idk/go-rst/pkg/parser"
+    import "github.com/go-i2p/go-rst/pkg/parser"
 
 
 ## Usage

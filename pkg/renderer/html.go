@@ -110,6 +110,17 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 			r.buffer.WriteString("</cite>")
 		}
 		r.buffer.WriteString("</blockquote>\n")
+	case *nodes.DoctestNode:
+		r.buffer.WriteString("<div class=\"doctest\">")
+		r.buffer.WriteString("<pre class=\"doctest-command\">>> ")
+		r.buffer.WriteString(html.EscapeString(n.Command()))
+		r.buffer.WriteString("</pre>")
+		if n.Expected() != "" {
+			r.buffer.WriteString("<pre class=\"doctest-output\">")
+			r.buffer.WriteString(html.EscapeString(n.Expected()))
+			r.buffer.WriteString("</pre>")
+		}
+		r.buffer.WriteString("</div>\n")
 
 	}
 }

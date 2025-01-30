@@ -9,8 +9,10 @@ import (
 	"github.com/go-i2p/go-rst/pkg/translator"
 )
 
-const simpleDoc = "example/doc.rst"
-const complexDoc = "example/complexDoc.rst"
+const (
+	simpleDoc  = "example/doc.rst"
+	complexDoc = "example/complexDoc.rst"
+)
 
 func TestParse(t *testing.T) {
 	noopTranslator := translator.NewNoopTranslator()

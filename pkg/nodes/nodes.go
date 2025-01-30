@@ -182,7 +182,7 @@ type CodeNode struct {
 }
 
 // NewCodeNode creates a new CodeNode with the given language and content
-func NewCodeNode(language string, content string, lineNumbers bool) *CodeNode {
+func NewCodeNode(language, content string, lineNumbers bool) *CodeNode {
 	node := &CodeNode{
 		BaseNode:    NewBaseNode(NodeCode),
 		language:    language,
@@ -290,7 +290,7 @@ type BlockQuoteNode struct {
 }
 
 // NewBlockQuoteNode creates a new BlockQuoteNode with the given content
-func NewBlockQuoteNode(content string, attribution string) *BlockQuoteNode {
+func NewBlockQuoteNode(content, attribution string) *BlockQuoteNode {
 	node := &BlockQuoteNode{
 		BaseNode:    NewBaseNode(NodeBlockQuote),
 		attribution: attribution,
@@ -310,4 +310,31 @@ func (n *BlockQuoteNode) String() string {
 		return fmt.Sprintf("BlockQuote: %s -- %s", n.Content(), n.attribution)
 	}
 	return fmt.Sprintf("BlockQuote: %s", n.Content())
+}
+
+// DoctestNode represents a doctest block with expected output
+type DoctestNode struct {
+	*BaseNode
+	command  string
+	expected string
+}
+
+func NewDoctestNode(command, expected string) *DoctestNode {
+	return &DoctestNode{
+		BaseNode: NewBaseNode(NodeDoctest),
+		command:  command,
+		expected: expected,
+	}
+}
+
+func (n *DoctestNode) Command() string {
+	return n.command
+}
+
+func (n *DoctestNode) Expected() string {
+	return n.expected
+}
+
+func (n *DoctestNode) String() string {
+	return fmt.Sprintf("Doctest: %s -> %s", n.command, n.expected)
 }

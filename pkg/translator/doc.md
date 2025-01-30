@@ -1,6 +1,6 @@
 # translator
 --
-    import "i2pgit.org/idk/go-rst/pkg/translator"
+    import "github.com/go-i2p/go-rst/pkg/translator"
 
 
 ## Usage

@@ -1,6 +1,6 @@
 # renderer
 --
-    import "i2pgit.org/idk/go-rst/pkg/renderer"
+    import "github.com/go-i2p/go-rst/pkg/renderer"
 
 
 ## Usage

@@ -22,6 +22,8 @@ const (
 	NodeDoctest                    // Represents a doctest block
 	NodeLineBlock                  // Represents a line block
 	NodeComment                    // Represents a comment
+	NodeTitle                      // Represents a document title
+	NodeSubtitle                   // Represents a document subtitle
 )
 
 // Node interface defines the common behavior for all RST document nodes

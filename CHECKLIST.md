@@ -66,7 +66,7 @@
 - [X] Block quotes
 - [X] Doctest blocks
 - [X] Line blocks
-- [ ] Comments
+- [X] Comments
 
 ### Advanced Features
 - [ ] Substitutions

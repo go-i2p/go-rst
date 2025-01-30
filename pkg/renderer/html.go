@@ -133,6 +133,12 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 		r.buffer.WriteString("<!-- ")
 		r.buffer.WriteString(html.EscapeString(n.Content()))
 		r.buffer.WriteString(" -->\n")
+	case *nodes.TitleNode:
+		r.buffer.WriteString(fmt.Sprintf("<h1 class=\"title\">%s</h1>\n",
+			html.EscapeString(n.Content())))
+	case *nodes.SubtitleNode:
+		r.buffer.WriteString(fmt.Sprintf("<h2 class=\"subtitle\">%s</h2>\n",
+			html.EscapeString(n.Content())))
 	}
 }
 

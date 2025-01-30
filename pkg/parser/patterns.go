@@ -13,6 +13,7 @@ type Patterns struct {
 	codeBlock        *regexp.Regexp
 	blockQuote       *regexp.Regexp
 	doctest          *regexp.Regexp
+	lineBlock        *regexp.Regexp
 }
 
 // NewPatterns initializes and returns a new instance of Patterns with compiled regular expressions.
@@ -25,5 +26,6 @@ func NewPatterns() *Patterns {
 		codeBlock:        regexp.MustCompile(`^\.\.\s+code::`),
 		blockQuote:       regexp.MustCompile(`^(\s{4,})(.*?)(?:\s*--\s*(.*))?$`),
 		doctest:          regexp.MustCompile(`^>>> (.+)\n((?:[^>].*\n)*)`),
+		lineBlock:        regexp.MustCompile(`^\|(.*)$`),
 	}
 }

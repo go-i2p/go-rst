@@ -121,7 +121,14 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 			r.buffer.WriteString("</pre>")
 		}
 		r.buffer.WriteString("</div>\n")
-
+	case *nodes.LineBlockNode:
+		r.buffer.WriteString("<div class=\"line-block\">")
+		for _, line := range n.Lines() {
+			r.buffer.WriteString("<div class=\"line\">")
+			r.buffer.WriteString(html.EscapeString(strings.TrimSpace(line)))
+			r.buffer.WriteString("</div>\n")
+		}
+		r.buffer.WriteString("</div>\n")
 	}
 }
 

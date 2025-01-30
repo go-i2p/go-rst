@@ -63,8 +63,8 @@
 
 ## Missing Features
 ### Document Components
-- [ ] Block quotes
-- [ ] Doctest blocks
+- [X] Block quotes
+- [X] Doctest blocks
 - [ ] Line blocks
 - [ ] Comments
 

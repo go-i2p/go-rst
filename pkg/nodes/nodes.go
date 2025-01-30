@@ -415,3 +415,19 @@ func NewSubtitleNode(content string) *SubtitleNode {
 func (n *SubtitleNode) String() string {
 	return fmt.Sprintf("Subtitle: %s", n.Content())
 }
+
+type TransitionNode struct {
+	*BaseNode
+	character rune
+}
+
+func NewTransitionNode(char rune) *TransitionNode {
+	return &TransitionNode{
+		BaseNode:  NewBaseNode(NodeTransition),
+		character: char,
+	}
+}
+
+func (n *TransitionNode) Character() rune {
+	return n.character
+}

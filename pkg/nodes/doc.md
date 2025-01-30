@@ -492,6 +492,7 @@ const (
 	NodeComment                    // Represents a comment
 	NodeTitle                      // Represents a document title
 	NodeSubtitle                   // Represents a document subtitle
+	NodeTransition
 )
 ```
 Node type constants define the possible types of nodes in the RST document tree
@@ -635,4 +636,25 @@ func (n *TitleNode) Level() int
 
 ```go
 func (n *TitleNode) String() string
+```
+
+#### type TransitionNode
+
+```go
+type TransitionNode struct {
+	*BaseNode
+}
+```
+
+
+#### func  NewTransitionNode
+
+```go
+func NewTransitionNode(char rune) *TransitionNode
+```
+
+#### func (*TransitionNode) Character
+
+```go
+func (n *TransitionNode) Character() rune
 ```

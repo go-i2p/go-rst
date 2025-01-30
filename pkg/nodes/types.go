@@ -24,6 +24,7 @@ const (
 	NodeComment                    // Represents a comment
 	NodeTitle                      // Represents a document title
 	NodeSubtitle                   // Represents a document subtitle
+	NodeTransition
 )
 
 // Node interface defines the common behavior for all RST document nodes

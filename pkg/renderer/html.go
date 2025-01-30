@@ -139,6 +139,8 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 	case *nodes.SubtitleNode:
 		r.buffer.WriteString(fmt.Sprintf("<h2 class=\"subtitle\">%s</h2>\n",
 			html.EscapeString(n.Content())))
+	case *nodes.TransitionNode:
+		r.buffer.WriteString("<hr class=\"docutils\">\n")
 	}
 }
 

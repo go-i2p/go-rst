@@ -5,7 +5,7 @@
 - [x] Paragraphs
 - [x] Nesting/Hierarchy support
 - [x] Basic content management
-- [ ] Document title/subtitle
+- [X] Document title/subtitle
 - [ ] Transitions (horizontal lines)
 
 ## ✅ Text Styling

@@ -19,6 +19,7 @@ type Patterns struct {
 	comment          *regexp.Regexp
 	title            *regexp.Regexp
 	subtitle         *regexp.Regexp
+	transition       *regexp.Regexp
 }
 
 // NewPatterns initializes and returns a new instance of Patterns with compiled regular expressions.
@@ -35,5 +36,6 @@ func NewPatterns() *Patterns {
 		comment:          regexp.MustCompile(`^\.\.\s(.*)$`),
 		title:            regexp.MustCompile(`^(={3,}|~{3,})\n(.+?)\n(?:={3,}|~{3,})$`),
 		subtitle:         regexp.MustCompile(`^(-{3,})\n(.+?)\n(?:-{3,})$`),
+		transition:       regexp.MustCompile(`^(\-{4,}|\={4,}|\*{4,})$`),
 	}
 }

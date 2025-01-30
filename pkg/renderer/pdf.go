@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
-	"i2pgit.org/idk/go-rst/pkg/nodes"
+	"github.com/go-i2p/go-rst/pkg/nodes"
 )
 
 // PDFRenderer implements rendering RST nodes to PDF format

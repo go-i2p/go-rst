@@ -282,3 +282,32 @@ func (n *CodeNode) String() string {
 func (n *TableNode) String() string {
 	return fmt.Sprintf("Table: %d columns x %d rows", len(n.headers), len(n.rows))
 }
+
+// BlockQuoteNode represents an indented block quote
+type BlockQuoteNode struct {
+	*BaseNode
+	attribution string
+}
+
+// NewBlockQuoteNode creates a new BlockQuoteNode with the given content
+func NewBlockQuoteNode(content string, attribution string) *BlockQuoteNode {
+	node := &BlockQuoteNode{
+		BaseNode:    NewBaseNode(NodeBlockQuote),
+		attribution: attribution,
+	}
+	node.SetContent(content)
+	return node
+}
+
+// Attribution returns the quote attribution if any
+func (n *BlockQuoteNode) Attribution() string {
+	return n.attribution
+}
+
+// String representation for debugging
+func (n *BlockQuoteNode) String() string {
+	if n.attribution != "" {
+		return fmt.Sprintf("BlockQuote: %s -- %s", n.Content(), n.attribution)
+	}
+	return fmt.Sprintf("BlockQuote: %s", n.Content())
+}

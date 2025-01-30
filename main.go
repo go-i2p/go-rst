@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 
-	"i2pgit.org/idk/go-rst/pkg/parser"
-	"i2pgit.org/idk/go-rst/pkg/renderer"
-	"i2pgit.org/idk/go-rst/pkg/translator"
+	"github.com/go-i2p/go-rst/pkg/parser"
+	"github.com/go-i2p/go-rst/pkg/renderer"
+	"github.com/go-i2p/go-rst/pkg/translator"
 )
 
 func main() {

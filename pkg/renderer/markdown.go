@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	"i2pgit.org/idk/go-rst/pkg/nodes"
+	"github.com/go-i2p/go-rst/pkg/nodes"
 )
 
 // MarkdownRenderer implements a Markdown renderer with the same interface as HTMLRenderer

@@ -6,8 +6,8 @@ import (
 	"bufio"
 	"strings"
 
-	"i2pgit.org/idk/go-rst/pkg/nodes"
-	"i2pgit.org/idk/go-rst/pkg/translator"
+	"github.com/go-i2p/go-rst/pkg/nodes"
+	"github.com/go-i2p/go-rst/pkg/translator"
 )
 
 // Parser is a struct that holds the state of the parser.

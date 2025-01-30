@@ -6,7 +6,7 @@ package parser
 import (
 	"testing"
 
-	"i2pgit.org/idk/go-rst/pkg/translator"
+	"github.com/go-i2p/go-rst/pkg/translator"
 )
 
 const simpleDoc = "example/doc.rst"

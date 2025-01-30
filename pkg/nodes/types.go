@@ -7,17 +7,18 @@ type NodeType int
 
 // Node type constants define the possible types of nodes in the RST document tree
 const (
-	NodeHeading   NodeType = iota // Represents a section heading
-	NodeParagraph                 // Represents a text paragraph
-	NodeList                      // Represents an ordered or unordered list
-	NodeListItem                  // Represents an item within a list
-	NodeLink                      // Represents a hyperlink
-	NodeEmphasis                  // Represents emphasized (italic) text
-	NodeStrong                    // Represents strong (bold) text
-	NodeMeta                      // Represents metadata information
-	NodeDirective                 // Represents an RST directive
-	NodeCode                      // Represents a code block
-	NodeTable                     // Represents a table structure
+	NodeHeading    NodeType = iota // Represents a section heading
+	NodeParagraph                  // Represents a text paragraph
+	NodeList                       // Represents an ordered or unordered list
+	NodeListItem                   // Represents an item within a list
+	NodeLink                       // Represents a hyperlink
+	NodeEmphasis                   // Represents emphasized (italic) text
+	NodeStrong                     // Represents strong (bold) text
+	NodeMeta                       // Represents metadata information
+	NodeDirective                  // Represents an RST directive
+	NodeCode                       // Represents a code block
+	NodeTable                      // Represents a table structure
+	NodeBlockQuote                 // Represents a block quote
 )
 
 // Node interface defines the common behavior for all RST document nodes

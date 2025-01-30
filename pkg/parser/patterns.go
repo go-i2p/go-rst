@@ -11,6 +11,7 @@ type Patterns struct {
 	meta             *regexp.Regexp
 	directive        *regexp.Regexp
 	codeBlock        *regexp.Regexp
+	blockQuote       *regexp.Regexp
 }
 
 // NewPatterns initializes and returns a new instance of Patterns with compiled regular expressions.
@@ -21,5 +22,6 @@ func NewPatterns() *Patterns {
 		meta:             regexp.MustCompile(`^\.\.\s+meta::`),
 		directive:        regexp.MustCompile(`^\.\.\s+(\w+)::`),
 		codeBlock:        regexp.MustCompile(`^\.\.\s+code::`),
+		blockQuote:       regexp.MustCompile(`^(\s{4,})(.*?)(?:\s*--\s*(.*))?$`),
 	}
 }

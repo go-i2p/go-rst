@@ -8,8 +8,8 @@ import (
 	"html"
 	"strings"
 
-	"github.com/yosssi/gohtml"
 	"github.com/go-i2p/go-rst/pkg/nodes"
+	"github.com/yosssi/gohtml"
 )
 
 // HTMLRederer is a renderer that renders nodes to HTML.
@@ -105,9 +105,9 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 		r.buffer.WriteString("<blockquote>")
 		r.buffer.WriteString(html.EscapeString(n.Content()))
 		if attr := n.Attribution(); attr != "" {
-			r.buffer.WriteString("<footer>")
+			r.buffer.WriteString("<cite>")
 			r.buffer.WriteString(html.EscapeString(attr))
-			r.buffer.WriteString("</footer>")
+			r.buffer.WriteString("</cite>")
 		}
 		r.buffer.WriteString("</blockquote>\n")
 

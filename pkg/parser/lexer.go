@@ -23,7 +23,7 @@ const (
 	TokenBulletList                        // TokenBulletList represents a bullet list item token.
 	TokenEnumList                          // TokenEnumList represents an enumerated list item token.
 	TokenDoctest                           // TokenDoctest represents a doctest token.
-	TokenLineBlock
+	TokenLineBlock                         // TokenLineBlock represents a line block token.
 )
 
 // Token represents a single token in the input text.

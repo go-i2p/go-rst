@@ -7,6 +7,14 @@ type DoctestNode struct {
 	expectedOutput string
 }
 
+func (n *DoctestNode) Expected() string {
+	return n.expectedOutput
+}
+
+func (n *DoctestNode) Command() string {
+	return n.code
+}
+
 // NewDoctestNode creates a new doctest node.
 func NewDoctestNode() *DoctestNode {
 	return &DoctestNode{

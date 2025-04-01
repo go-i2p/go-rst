@@ -1,30 +1,49 @@
 package nodes
 
-import "fmt"
-
-// DoctestNode represents a doctest block with expected output
+// DoctestNode represents a Python doctest block with code and expected output.
 type DoctestNode struct {
-	*BaseNode
-	command  string
-	expected string
+	BaseNode
+	code           string
+	expectedOutput string
 }
 
-func NewDoctestNode(command, expected string) *DoctestNode {
+// NewDoctestNode creates a new doctest node.
+func NewDoctestNode() *DoctestNode {
 	return &DoctestNode{
-		BaseNode: NewBaseNode(NodeDoctest),
-		command:  command,
-		expected: expected,
+		BaseNode: BaseNode{
+			nodeType: NodeDoctest,
+		},
+		code:           "",
+		expectedOutput: "",
 	}
 }
 
-func (n *DoctestNode) Command() string {
-	return n.command
+// SetCode sets the code content of the doctest.
+func (n *DoctestNode) SetCode(code string) {
+	n.code = code
 }
 
-func (n *DoctestNode) Expected() string {
-	return n.expected
+// Code returns the code content of the doctest.
+func (n *DoctestNode) Code() string {
+	return n.code
 }
 
-func (n *DoctestNode) String() string {
-	return fmt.Sprintf("Doctest: %s -> %s", n.command, n.expected)
+// SetExpectedOutput sets the expected output of the doctest.
+func (n *DoctestNode) SetExpectedOutput(output string) {
+	n.expectedOutput = output
+}
+
+// ExpectedOutput returns the expected output of the doctest.
+func (n *DoctestNode) ExpectedOutput() string {
+	return n.expectedOutput
+}
+
+// Content returns the code of this node.
+func (n *DoctestNode) Content() string {
+	return n.code
+}
+
+// SetContent sets the code of this node.
+func (n *DoctestNode) SetContent(content string) {
+	n.code = content
 }

@@ -15,6 +15,8 @@ type Patterns struct {
 	codeBlock        *regexp.Regexp
 	blockQuote       *regexp.Regexp
 	doctest          *regexp.Regexp
+	doctestContinue  *regexp.Regexp
+	doctestOutput    *regexp.Regexp
 	lineBlock        *regexp.Regexp
 	comment          *regexp.Regexp
 	title            *regexp.Regexp
@@ -37,5 +39,7 @@ func NewPatterns() *Patterns {
 		title:            regexp.MustCompile(`^(={3,}|~{3,})\n(.+?)\n(?:={3,}|~{3,})$`),
 		subtitle:         regexp.MustCompile(`^(-{3,})\n(.+?)\n(?:-{3,})$`),
 		transition:       regexp.MustCompile(`^(\-{4,}|\={4,}|\*{4,})$`),
+		doctestContinue:  regexp.MustCompile(`^\.\.\.(.*$)`),
+		doctestOutput:    regexp.MustCompile(`^([^>][^>][^>].*)$`),
 	}
 }

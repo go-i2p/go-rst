@@ -6,6 +6,20 @@ import "fmt"
 type ListNode struct {
 	*BaseNode
 	ordered bool
+	indent  int
+}
+
+func (n *ListNode) Indent() int {
+	return n.indent
+}
+
+func (n *ListNode) SetIndent(indent int) {
+	n.indent = indent
+}
+
+// AppendChild adds a list item node as a child to this list node
+func (n *ListNode) AppendChild(listItem *ListItemNode) {
+	n.BaseNode.AddChild(listItem)
 }
 
 // NewListNode creates a new ListNode with the given ordered flag

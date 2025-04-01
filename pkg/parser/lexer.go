@@ -18,6 +18,11 @@ const (
 	TokenCodeBlock                         // TokenCodeBlock represents a code block token.
 	TokenBlankLine                         // TokenBlankLine represents a blank line token.
 	TokenIndent                            // TokenIndent represents an indent token.
+	TokenBlockQuote                        // TokenBlockQuote represents a block quote token.
+	TokenComment                           // TokenComment represents a comment token.
+	TokenBulletList                        // TokenBulletList represents a bullet list item token.
+	TokenEnumList                          // TokenEnumList represents an enumerated list item token.
+
 )
 
 // Token represents a single token in the input text.
@@ -99,6 +104,44 @@ func (l *Lexer) Tokenize(line string) Token {
 			Type:    TokenDirective,
 			Content: matches[1],
 			Args:    args,
+		}
+	}
+
+	// Check for block quote
+	if matches := l.patterns.blockQuote.FindStringSubmatch(line); len(matches) > 1 {
+		attribution := ""
+		if len(matches) > 2 {
+			attribution = matches[3]
+		}
+		return Token{
+			Type:    TokenBlockQuote,
+			Content: matches[2],
+			Args:    []string{attribution},
+		}
+	}
+
+	// Check for comment
+	if matches := l.patterns.comment.FindStringSubmatch(line); len(matches) > 1 {
+		return Token{
+			Type:    TokenComment,
+			Content: matches[1],
+		}
+	}
+	// Check for bullet list
+	if matches := l.patterns.bulletList.FindStringSubmatch(line); len(matches) > 1 {
+		return Token{
+			Type:    TokenBulletList,
+			Content: matches[4],
+			Args:    []string{matches[1], matches[2]}, // indent, bullet type
+		}
+	}
+
+	// Check for enumerated list
+	if matches := l.patterns.enumList.FindStringSubmatch(line); len(matches) > 1 {
+		return Token{
+			Type:    TokenEnumList,
+			Content: matches[4],
+			Args:    []string{matches[1], matches[2]}, // indent, marker
 		}
 	}
 

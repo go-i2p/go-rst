@@ -8,6 +8,10 @@ type BlockQuoteNode struct {
 	attribution string
 }
 
+func (n *BlockQuoteNode) AppendContent(content string) {
+	n.SetContent(n.Content() + "\n" + content)
+}
+
 // NewBlockQuoteNode creates a new BlockQuoteNode with the given content
 func NewBlockQuoteNode(content, attribution string) *BlockQuoteNode {
 	node := &BlockQuoteNode{

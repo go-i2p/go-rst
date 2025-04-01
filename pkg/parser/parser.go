@@ -63,6 +63,14 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 	// translatedContent := p.translator.Translate(token.Content)
 	// token.Content = translatedContent
 	switch token.Type {
+	case TokenBulletList:
+		return p.processListItem(token.Content, token.Args, false, currentNode)
+	case TokenEnumList:
+		return p.processListItem(token.Content, token.Args, true, currentNode)
+	case TokenBlockQuote:
+		return p.processBlockQuote(token.Content, token.Args, currentNode)
+	case TokenComment:
+		return nodes.NewCommentNode(token.Content)
 	case TokenTransBlock:
 		// Always create a new node for translation blocks
 		translatedContent := p.translator.Translate(strings.TrimSpace(token.Content))
@@ -104,96 +112,4 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 	}
 
 	return currentNode
-}
-
-func (p *Parser) processHeading(content, underline string) nodes.Node {
-	level := 1
-	switch underline[0] {
-	case '-':
-		level = 2
-	case '~':
-		level = 3
-	}
-
-	node := nodes.NewHeadingNode(strings.TrimSpace(content), level)
-	p.nodes = append(p.nodes, node)
-	return nil
-}
-
-func (p *Parser) processMetaContent(line string, currentNode nodes.Node) nodes.Node {
-	if currentNode == nil || currentNode.Type() != nodes.NodeMeta {
-		return currentNode
-	}
-
-	parts := strings.SplitN(line, ":", 2)
-	if len(parts) != 2 {
-		return currentNode
-	}
-
-	key := strings.TrimSpace(parts[0])
-	value := strings.TrimSpace(parts[1])
-
-	node := nodes.NewMetaNode(key, value)
-	p.nodes = append(p.nodes, node)
-	p.context.inMeta = false
-	return nil
-}
-
-func (p *Parser) processCodeBlock(line string, currentNode nodes.Node) nodes.Node {
-	if currentNode == nil || currentNode.Type() != nodes.NodeCode {
-		return currentNode
-	}
-
-	p.context.buffer = append(p.context.buffer, line)
-
-	if strings.TrimSpace(line) == "" {
-		codeNode := currentNode.(*nodes.CodeNode)
-		content := strings.Join(p.context.buffer, "\n")
-		codeNode.SetContent(content)
-		p.nodes = append(p.nodes, codeNode)
-		p.context.Reset()
-		return nil
-	}
-
-	return currentNode
-}
-
-func (p *Parser) processDirectiveContent(line string, currentNode nodes.Node) nodes.Node {
-	if currentNode == nil || currentNode.Type() != nodes.NodeDirective {
-		return currentNode
-	}
-
-	directiveNode := currentNode.(*nodes.DirectiveNode)
-	p.context.buffer = append(p.context.buffer, line)
-
-	if strings.TrimSpace(line) == "" {
-		content := strings.Join(p.context.buffer, "\n")
-		directiveNode.SetRawContent(content)
-		p.nodes = append(p.nodes, directiveNode)
-		p.context.Reset()
-		return nil
-	}
-
-	return currentNode
-}
-
-func (p *Parser) processParagraph(line string, currentNode nodes.Node) nodes.Node {
-	if strings.TrimSpace(line) == "" {
-		if currentNode != nil {
-			p.nodes = append(p.nodes, currentNode)
-		}
-		return nil
-	}
-
-	if currentNode == nil {
-		return nodes.NewParagraphNode(line)
-	}
-
-	if currentNode.Type() == nodes.NodeParagraph {
-		currentContent := currentNode.Content()
-		currentNode.SetContent(currentContent + "\n" + line)
-		return currentNode
-	}
-
-	return nodes.NewParagraphNode(line)
 }

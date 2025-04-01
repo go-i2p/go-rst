@@ -98,6 +98,18 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 		p.context.currentDirective = token.Content
 		return nodes.NewDirectiveNode(token.Content, token.Args)
 
+	case TokenLineBlock:
+		// Check if we're already in a line block node
+		if lineBlock, ok := currentNode.(*nodes.LineBlockNode); ok {
+			// Add this line to the existing line block
+			lines := lineBlock.Lines()
+			lines = append(lines, token.Content)
+			newLineBlock := nodes.NewLineBlockNode(lines)
+			return newLineBlock
+		}
+		// Create a new line block node
+		return nodes.NewLineBlockNode([]string{token.Content})
+
 	case TokenText:
 		if p.context.inCodeBlock {
 			return p.processCodeBlock(token.Content, currentNode)

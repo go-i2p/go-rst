@@ -22,7 +22,8 @@ const (
 	TokenComment                           // TokenComment represents a comment token.
 	TokenBulletList                        // TokenBulletList represents a bullet list item token.
 	TokenEnumList                          // TokenEnumList represents an enumerated list item token.
-
+	TokenDoctest                           // TokenDoctest represents a doctest token.
+	TokenLineBlock
 )
 
 // Token represents a single token in the input text.
@@ -142,6 +143,14 @@ func (l *Lexer) Tokenize(line string) Token {
 			Type:    TokenEnumList,
 			Content: matches[4],
 			Args:    []string{matches[1], matches[2]}, // indent, marker
+		}
+	}
+
+	// Check for line block (poetry-style line with | prefix)
+	if matches := l.patterns.lineBlock.FindStringSubmatch(line); len(matches) > 0 {
+		return Token{
+			Type:    TokenLineBlock,
+			Content: strings.TrimSpace(matches[1]), // The content after the | character
 		}
 	}
 

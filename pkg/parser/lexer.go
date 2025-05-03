@@ -24,6 +24,7 @@ const (
 	TokenEnumList                          // TokenEnumList represents an enumerated list item token.
 	TokenDoctest                           // TokenDoctest represents a doctest token.
 	TokenLineBlock                         // TokenLineBlock represents a line block token.
+	TokenTransition                        // TokenTransition represents a transition token.
 )
 
 // Token represents a single token in the input text.
@@ -151,6 +152,15 @@ func (l *Lexer) Tokenize(line string) Token {
 		return Token{
 			Type:    TokenLineBlock,
 			Content: strings.TrimSpace(matches[1]), // The content after the | character
+		}
+	}
+
+	// Check for transitions
+	if l.patterns.IsTransition(line) {
+		transChar := l.patterns.TransitionChar(line)
+		return Token{
+			Type:    TokenTransition,
+			Content: string(transChar),
 		}
 	}
 

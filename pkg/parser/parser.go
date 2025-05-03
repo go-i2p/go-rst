@@ -121,6 +121,12 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 			return p.processDirectiveContent(token.Content, currentNode)
 		}
 		return p.processParagraph(token.Content, currentNode)
+	case TokenTransition:
+		// For transitions, we create a new transition node with the character used
+		if len(token.Content) > 0 {
+			return p.processTransition(token.Content)
+		}
+		return nodes.NewTransitionNode('-') // Default to hyphen if empty
 	}
 
 	return currentNode

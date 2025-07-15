@@ -237,20 +237,17 @@ func (r *PDFRenderer) renderEmphasis(node *nodes.EmphasisNode) error {
 
 	return r.renderChildren(node)
 }
+*/
 
 func (r *PDFRenderer) renderStrong(node *nodes.StrongNode) error {
-	// Save current font information
-	family, style, size := r.pdf.GetFontInfo()
-
 	// Set bold style for strong text
-	r.pdf.SetFont(family, "B", size)
+	r.pdf.SetFont("Arial", "B", r.fontSize)
 
 	// Write the text
 	r.pdf.Cell(0, r.lineHeight, node.Content())
 
-	// Restore original font style
-	r.pdf.SetFont(family, style, size)
+	// Reset to normal font style
+	r.pdf.SetFont("Arial", "", r.fontSize)
 
 	return r.renderChildren(node)
 }
-*/

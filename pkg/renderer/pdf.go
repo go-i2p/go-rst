@@ -61,6 +61,8 @@ func (r *PDFRenderer) renderNode(node nodes.Node) error {
 		return r.renderTable(n)
 	case *nodes.DirectiveNode:
 		return r.renderDirective(n)
+	case *nodes.StrongNode:
+		return r.renderStrong(n)
 	//case *nodes.EmphasisNode:
 	//return r.renderEmphasis(n)
 	default:
@@ -226,6 +228,22 @@ func (r *PDFRenderer) renderEmphasis(node *nodes.EmphasisNode) error {
 
 	// Set italic style for emphasis
 	r.pdf.SetFont(family, "i", size)
+
+	// Write the text
+	r.pdf.Cell(0, r.lineHeight, node.Content())
+
+	// Restore original font style
+	r.pdf.SetFont(family, style, size)
+
+	return r.renderChildren(node)
+}
+
+func (r *PDFRenderer) renderStrong(node *nodes.StrongNode) error {
+	// Save current font information
+	family, style, size := r.pdf.GetFontInfo()
+
+	// Set bold style for strong text
+	r.pdf.SetFont(family, "B", size)
 
 	// Write the text
 	r.pdf.Cell(0, r.lineHeight, node.Content())

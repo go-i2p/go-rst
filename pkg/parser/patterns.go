@@ -18,6 +18,7 @@ type Patterns struct {
 	doctestContinue  *regexp.Regexp
 	doctestOutput    *regexp.Regexp
 	emphasis         *regexp.Regexp
+	strong           *regexp.Regexp
 	lineBlock        *regexp.Regexp
 	comment          *regexp.Regexp
 	title            *regexp.Regexp
@@ -47,5 +48,6 @@ func NewPatterns() *Patterns {
 		bulletList:       regexp.MustCompile(`^(\s*)([-*+])(\s+)(.+)$`),
 		enumList:         regexp.MustCompile(`^(\s*)(\d+|[a-zA-Z]|[ivxlcdm]+|[IVXLCDM]+)(\.\s+)(.+)$`),
 		emphasis:         regexp.MustCompile(`\*([^*]+)\*`),
+		strong:           regexp.MustCompile(`\*\*([^*]+)\*\*`),
 	}
 }

@@ -107,6 +107,10 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 		// Process the emphasized text
 		return p.processEmphasis(token.Content)
 
+	case TokenStrong:
+		// Process the strong (bold) text
+		return p.processStrong(token.Content)
+
 	case TokenLineBlock:
 		// Check if we're already in a line block node
 		if lineBlock, ok := currentNode.(*nodes.LineBlockNode); ok {

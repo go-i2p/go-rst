@@ -26,6 +26,7 @@ const (
 	TokenLineBlock                         // TokenLineBlock represents a line block token.
 	TokenTransition                        // TokenTransition represents a transition token.
 	TokenEmphasis                          // TokenEmphasis represents emphasized (italic) text
+	TokenStrong                            // TokenStrong represents strong (bold) text
 )
 
 // Token represents a single token in the input text.
@@ -145,6 +146,14 @@ func (l *Lexer) Tokenize(line string) Token {
 			Type:    TokenEnumList,
 			Content: matches[4],
 			Args:    []string{matches[1], matches[2]}, // indent, marker
+		}
+	}
+
+	// Check for strong (bold text) - must come before emphasis to avoid conflict
+	if matches := l.patterns.strong.FindStringSubmatch(line); len(matches) > 1 {
+		return Token{
+			Type:    TokenStrong,
+			Content: matches[1], // The text between double asterisks
 		}
 	}
 

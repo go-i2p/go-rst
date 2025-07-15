@@ -46,7 +46,7 @@ func NewPatterns() *Patterns {
 		subtitle:         regexp.MustCompile(`^(-{3,})\n(.+?)\n(?:-{3,})$`),
 		transition:       regexp.MustCompile(`^(\-{4,}|\={4,}|\*{4,})$`),
 		bulletList:       regexp.MustCompile(`^(\s*)([-*+])(\s+)(.+)$`),
-		enumList:         regexp.MustCompile(`^(\s*)(\d+|[a-zA-Z]|[ivxlcdm]+|[IVXLCDM]+)(\.\s+)(.+)$`),
+		enumList:         regexp.MustCompile(`^(\s*)(\d+|[a-zA-Z]|[ivxlcdm]+|[IVXLCDM]+|#)(\.\s+)(.+)$`),
 		emphasis:         regexp.MustCompile(`\*([^*]+)\*`),
 		strong:           regexp.MustCompile(`\*\*([^*]+)\*\*`),
 	}

@@ -41,7 +41,7 @@ func (p *Parser) Parse(content string) []nodes.Node {
 		line := scanner.Text()
 		token := p.lexer.Tokenize(line)
 
-		if newNode := p.processToken(token, prevToken, currentNode); newNode != nil {
+		if newNode := p.processToken(token, prevToken, currentNode, line); newNode != nil {
 			// Only append if we actually have a new node
 			if currentNode != nil && currentNode != newNode {
 				p.nodes = append(p.nodes, currentNode)
@@ -59,7 +59,7 @@ func (p *Parser) Parse(content string) []nodes.Node {
 	return p.nodes
 }
 
-func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) nodes.Node {
+func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node, originalLine string) nodes.Node {
 	// translatedContent := p.translator.Translate(token.Content)
 	// token.Content = translatedContent
 	switch token.Type {
@@ -125,7 +125,7 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 
 	case TokenText:
 		if p.context.inCodeBlock {
-			return p.processCodeBlock(token.Content, currentNode)
+			return p.processCodeBlock(originalLine, currentNode) // Use original line to preserve indentation
 		}
 		if p.context.inMeta {
 			return p.processMetaContent(token.Content, currentNode)

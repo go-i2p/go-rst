@@ -4,6 +4,7 @@ package parser
 // Use example restructuredText files embedded in the test functions
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/go-i2p/go-rst/pkg/nodes"
@@ -84,5 +85,44 @@ func TestParseStrongText(t *testing.T) {
 
 	if !foundStrong {
 		t.Errorf("Expected to find a strong node in parsed document")
+	}
+}
+
+func TestParseCodeBlock(t *testing.T) {
+	noopTranslator := translator.NewNoopTranslator()
+	parser := NewParser(noopTranslator)
+	content := `.. code-block:: python
+
+    def hello():
+        print("Hello, world!")
+        return True
+
+End of test.`
+
+	doc := parser.Parse(content)
+	if len(doc) == 0 {
+		t.Errorf("Expected parsed nodes, got empty document")
+	}
+
+	// Check that we have a code node
+	foundCode := false
+	for _, node := range doc {
+		if node.Type() == nodes.NodeCode {
+			foundCode = true
+			codeNode := node.(*nodes.CodeNode)
+			if codeNode.Language() != "python" {
+				t.Errorf("Expected code language to be 'python', got '%s'", codeNode.Language())
+			}
+			if !strings.Contains(codeNode.Content(), "def hello():") {
+				t.Errorf("Expected code content to contain 'def hello():', got '%s'", codeNode.Content())
+			}
+			if !strings.Contains(codeNode.Content(), "print(\"Hello, world!\")") {
+				t.Errorf("Expected code content to contain print statement, got '%s'", codeNode.Content())
+			}
+		}
+	}
+
+	if !foundCode {
+		t.Errorf("Expected to find a code node in parsed document")
 	}
 }

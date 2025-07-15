@@ -35,7 +35,7 @@ func NewPatterns() *Patterns {
 		transBlock:       regexp.MustCompile(`{%\s*trans\s*%}(.*?){%\s*endtrans\s*%}`),
 		meta:             regexp.MustCompile(`^\.\.\s+meta::`),
 		directive:        regexp.MustCompile(`^\.\.\s+(\w+)::`),
-		codeBlock:        regexp.MustCompile(`^\.\.\s+code::`),
+		codeBlock:        regexp.MustCompile(`^\.\.\s+code-block::`),
 		blockQuote:       regexp.MustCompile(`^(\s{4,})(.*?)(?:\s*--\s*(.*))?$`),
 		doctest:          regexp.MustCompile(`^>>> (.+)\n((?:[^>].*\n)*)`),
 		doctestContinue:  regexp.MustCompile(`^\.\.\.(.*$)`),

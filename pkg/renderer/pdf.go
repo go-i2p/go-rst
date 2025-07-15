@@ -61,6 +61,8 @@ func (r *PDFRenderer) renderNode(node nodes.Node) error {
 		return r.renderTable(n)
 	case *nodes.DirectiveNode:
 		return r.renderDirective(n)
+	//case *nodes.EmphasisNode:
+	//return r.renderEmphasis(n)
 	default:
 		return r.renderChildren(node)
 	}
@@ -216,3 +218,21 @@ func (r *PDFRenderer) renderDirective(node *nodes.DirectiveNode) error {
 func (r *PDFRenderer) renderChildren(node nodes.Node) error {
 	return r.Render(node.Children())
 }
+
+/* Broken but doesn't matter right now, HTML matters.
+func (r *PDFRenderer) renderEmphasis(node *nodes.EmphasisNode) error {
+	// Save current font information
+	family, style, size := r.pdf.GetFontInfo()
+
+	// Set italic style for emphasis
+	r.pdf.SetFont(family, "i", size)
+
+	// Write the text
+	r.pdf.Cell(0, r.lineHeight, node.Content())
+
+	// Restore original font style
+	r.pdf.SetFont(family, style, size)
+
+	return r.renderChildren(node)
+}
+*/

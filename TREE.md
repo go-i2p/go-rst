@@ -7,7 +7,7 @@ pkg/
 │   ├── doc.md                   # Documentation for the nodes package
 │   ├── doctest.go               # Defines DoctestNode for representing doctest blocks
 │   ├── em.go                    # Defines EmphasisNode for representing emphasized (italic) text
-│   ├── extra_util.go            # Utility functions for node operations
+│   ├── extra_util.go            # Utility functions for node operations like indentation
 │   ├── heading.go               # Defines HeadingNode for representing section headings
 │   ├── lineblock.go             # Defines LineBlockNode for representing line blocks
 │   ├── link.go                  # Defines LinkNode for representing hyperlinks
@@ -24,7 +24,7 @@ pkg/
 ├── parser/                      # RST parsing logic
 │   ├── blockquote.go            # Contains logic for parsing block quotes
 │   ├── code.go                  # Contains logic for parsing code blocks
-│   ├── context.go               # Manages parser context and state
+│   ├── context.go               # Manages parser context and state during parsing
 │   ├── directive.go             # Contains logic for parsing RST directives
 │   ├── doc.md                   # Documentation for the parser package
 │   ├── doctest.go               # Contains logic for parsing doctest blocks
@@ -42,13 +42,14 @@ pkg/
 │   ├── strong.go                # Contains logic for parsing strong (bold) text
 │   ├── subtitle.go              # Contains logic for parsing document subtitles
 │   ├── table.go                 # Contains logic for parsing tables
-│   └── title.go                 # Contains logic for parsing document titles
+│   ├── title.go                 # Contains logic for parsing document titles
+│   └── transition.go            # Contains logic for parsing transitions between sections
 │
 ├── renderer/                    # Output rendering components
 │   ├── doc.md                   # Documentation for the renderer package
 │   ├── html.go                  # HTML output renderer implementation
 │   ├── markdown.go              # Markdown output renderer implementation
-│   └── pdf.go                   # PDF output renderer implementation
+│   └── pdf.go                   # PDF output renderer implementation using gofpdf
 │
 └── translator/                  # Translation capabilities
     ├── doc.md                   # Documentation for the translator package

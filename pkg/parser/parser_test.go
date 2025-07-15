@@ -48,3 +48,14 @@ func TestParseNilTranslatorEmptyInput(t *testing.T) {
 		t.Errorf("Expected empty, got a document")
 	}
 }
+
+func TestParseNilTranslatorWithTranslationBlocks(t *testing.T) {
+	parser := NewParser(nil)
+	content := "{% trans %}Hello, world!{% endtrans %}"
+
+	// This should not panic, but gracefully handle the nil translator
+	doc := parser.Parse(content)
+	if len(doc) == 0 {
+		t.Errorf("Expected parsed nodes, got empty document")
+	}
+}

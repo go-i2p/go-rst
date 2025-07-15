@@ -25,6 +25,7 @@ const (
 	TokenDoctest                           // TokenDoctest represents a doctest token.
 	TokenLineBlock                         // TokenLineBlock represents a line block token.
 	TokenTransition                        // TokenTransition represents a transition token.
+	TokenEmphasis                          // TokenEmphasis represents emphasized (italic) text
 )
 
 // Token represents a single token in the input text.
@@ -144,6 +145,14 @@ func (l *Lexer) Tokenize(line string) Token {
 			Type:    TokenEnumList,
 			Content: matches[4],
 			Args:    []string{matches[1], matches[2]}, // indent, marker
+		}
+	}
+
+	// Check for emphasis (italic text)
+	if matches := l.patterns.emphasis.FindStringSubmatch(line); len(matches) > 1 {
+		return Token{
+			Type:    TokenEmphasis,
+			Content: matches[1], // The text between asterisks
 		}
 	}
 

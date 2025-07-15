@@ -73,8 +73,13 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 		return nodes.NewCommentNode(token.Content)
 	case TokenTransBlock:
 		// Always create a new node for translation blocks
-		translatedContent := p.translator.Translate(strings.TrimSpace(token.Content))
-		return nodes.NewParagraphNode(translatedContent)
+		content := strings.TrimSpace(token.Content)
+		if p.translator != nil {
+			translatedContent := p.translator.Translate(content)
+			return nodes.NewParagraphNode(translatedContent)
+		}
+		// If no translator is available, return the original content
+		return nodes.NewParagraphNode(content)
 	case TokenHeadingUnderline:
 		if prevToken.Type == TokenText {
 			return p.processHeading(prevToken.Content, token.Content)
@@ -97,6 +102,10 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node) no
 		p.context.inDirective = true
 		p.context.currentDirective = token.Content
 		return nodes.NewDirectiveNode(token.Content, token.Args)
+
+	case TokenEmphasis:
+		// Process the emphasized text
+		return p.processEmphasis(token.Content)
 
 	case TokenLineBlock:
 		// Check if we're already in a line block node

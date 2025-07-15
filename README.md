@@ -14,7 +14,7 @@ It is mostly unrelated to previous attempts to parse restructuredText in Go.
 ## Installation
 
 ```bash
-go get i2pgit.org/idk/go-rst
+go get github.com/go-i2p/go-rst
 ```
 
 ## Quick Start
@@ -34,9 +34,9 @@ import (
     "fmt"
     "io/ioutil"
     
-    "i2pgit.org/idk/go-rst/pkg/parser"
-    "i2pgit.org/idk/go-rst/pkg/renderer"
-    "i2pgit.org/idk/go-rst/pkg/translator"
+    "github.com/go-i2p/go-rst/pkg/parser"
+    "github.com/go-i2p/go-rst/pkg/renderer"
+    "github.com/go-i2p/go-rst/pkg/translator"
 )
 
 func main() {

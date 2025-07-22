@@ -61,8 +61,29 @@ func (p *Parser) Parse(content string) []nodes.Node {
 }
 
 func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node, originalLine string) nodes.Node {
-	// translatedContent := p.translator.Translate(token.Content)
-	// token.Content = translatedContent
+	switch token.Type {
+	case TokenBulletList, TokenEnumList, TokenBlockQuote, TokenComment:
+		return p.processListAndBlockTokens(token, currentNode)
+	case TokenTransBlock:
+		return p.processTranslationBlock(token)
+	case TokenHeadingUnderline:
+		return p.processHeadingToken(token, prevToken)
+	case TokenMeta, TokenCodeBlock, TokenDirective:
+		return p.processStructuralTokens(token)
+	case TokenEmphasis, TokenStrong:
+		return p.processFormattingTokens(token)
+	case TokenLineBlock:
+		return p.processLineBlockToken(token, currentNode)
+	case TokenText:
+		return p.processTextToken(token, currentNode, originalLine)
+	case TokenTransition:
+		return p.processTransitionToken(token)
+	}
+	return currentNode
+}
+
+// processListAndBlockTokens handles list items, block quotes, and comments.
+func (p *Parser) processListAndBlockTokens(token Token, currentNode nodes.Node) nodes.Node {
 	switch token.Type {
 	case TokenBulletList:
 		return p.processListItem(token.Content, token.Args, false, currentNode)
@@ -72,24 +93,34 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node, or
 		return p.processBlockQuote(token.Content, token.Args, currentNode)
 	case TokenComment:
 		return nodes.NewCommentNode(token.Content)
-	case TokenTransBlock:
-		// Always create a new node for translation blocks
-		content := strings.TrimSpace(token.Content)
-		if p.translator != nil {
-			translatedContent := p.translator.Translate(content)
-			return nodes.NewParagraphNode(translatedContent)
-		}
-		// If no translator is available, return the original content
-		return nodes.NewParagraphNode(content)
-	case TokenHeadingUnderline:
-		if prevToken.Type == TokenText {
-			return p.processHeading(prevToken.Content, token.Content)
-		}
+	}
+	return currentNode
+}
 
+// processTranslationBlock handles translation block tokens with optional translation.
+func (p *Parser) processTranslationBlock(token Token) nodes.Node {
+	content := strings.TrimSpace(token.Content)
+	if p.translator != nil {
+		translatedContent := p.translator.Translate(content)
+		return nodes.NewParagraphNode(translatedContent)
+	}
+	return nodes.NewParagraphNode(content)
+}
+
+// processHeadingToken handles heading underline tokens.
+func (p *Parser) processHeadingToken(token, prevToken Token) nodes.Node {
+	if prevToken.Type == TokenText {
+		return p.processHeading(prevToken.Content, token.Content)
+	}
+	return nil
+}
+
+// processStructuralTokens handles meta, code block, and directive tokens.
+func (p *Parser) processStructuralTokens(token Token) nodes.Node {
+	switch token.Type {
 	case TokenMeta:
 		p.context.inMeta = true
 		return nodes.NewMetaNode("", "")
-
 	case TokenCodeBlock:
 		p.context.inCodeBlock = true
 		p.context.codeBlockIndent = 4
@@ -98,50 +129,53 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node, or
 			language = token.Args[0]
 		}
 		return nodes.NewCodeNode(language, "", false)
-
 	case TokenDirective:
 		p.context.inDirective = true
 		p.context.currentDirective = token.Content
 		return nodes.NewDirectiveNode(token.Content, token.Args)
-
-	case TokenEmphasis:
-		// Process the emphasized text
-		return p.processEmphasis(token.Content)
-
-	case TokenStrong:
-		// Process the strong (bold) text
-		return p.processStrong(token.Content)
-
-	case TokenLineBlock:
-		// Check if we're already in a line block node
-		if lineBlock, ok := currentNode.(*nodes.LineBlockNode); ok {
-			// Add this line to the existing line block
-			lines := lineBlock.Lines()
-			lines = append(lines, token.Content)
-			newLineBlock := nodes.NewLineBlockNode(lines)
-			return newLineBlock
-		}
-		// Create a new line block node
-		return nodes.NewLineBlockNode([]string{token.Content})
-
-	case TokenText:
-		if p.context.inCodeBlock {
-			return p.processCodeBlock(originalLine, currentNode) // Use original line to preserve indentation
-		}
-		if p.context.inMeta {
-			return p.processMetaContent(token.Content, currentNode)
-		}
-		if p.context.inDirective {
-			return p.processDirectiveContent(token.Content, currentNode)
-		}
-		return p.processParagraph(token.Content, currentNode)
-	case TokenTransition:
-		// For transitions, we create a new transition node with the character used
-		if len(token.Content) > 0 {
-			return p.processTransition(token.Content)
-		}
-		return nodes.NewTransitionNode('-') // Default to hyphen if empty
 	}
+	return nil
+}
 
-	return currentNode
+// processFormattingTokens handles emphasis and strong formatting tokens.
+func (p *Parser) processFormattingTokens(token Token) nodes.Node {
+	switch token.Type {
+	case TokenEmphasis:
+		return p.processEmphasis(token.Content)
+	case TokenStrong:
+		return p.processStrong(token.Content)
+	}
+	return nil
+}
+
+// processLineBlockToken handles line block tokens and manages existing line blocks.
+func (p *Parser) processLineBlockToken(token Token, currentNode nodes.Node) nodes.Node {
+	if lineBlock, ok := currentNode.(*nodes.LineBlockNode); ok {
+		lines := lineBlock.Lines()
+		lines = append(lines, token.Content)
+		return nodes.NewLineBlockNode(lines)
+	}
+	return nodes.NewLineBlockNode([]string{token.Content})
+}
+
+// processTextToken handles text tokens based on current parser context.
+func (p *Parser) processTextToken(token Token, currentNode nodes.Node, originalLine string) nodes.Node {
+	if p.context.inCodeBlock {
+		return p.processCodeBlock(originalLine, currentNode)
+	}
+	if p.context.inMeta {
+		return p.processMetaContent(token.Content, currentNode)
+	}
+	if p.context.inDirective {
+		return p.processDirectiveContent(token.Content, currentNode)
+	}
+	return p.processParagraph(token.Content, currentNode)
+}
+
+// processTransitionToken handles transition tokens with optional content.
+func (p *Parser) processTransitionToken(token Token) nodes.Node {
+	if len(token.Content) > 0 {
+		return p.processTransition(token.Content)
+	}
+	return nodes.NewTransitionNode('-')
 }

@@ -50,12 +50,44 @@ func NewLexer() *Lexer {
 
 // Tokenize tokenizes a single line of input text.
 func (l *Lexer) Tokenize(line string) Token {
-	// Handle blank lines
+	// Handle blank lines first
 	if strings.TrimSpace(line) == "" {
 		return Token{Type: TokenBlankLine}
 	}
 
-	// Calculate indentation
+	// Normalize line by removing leading whitespace
+	normalizedLine := l.normalizeLineIndentation(line)
+
+	// Try directive-based tokens first
+	if token := l.checkDirectiveTokens(normalizedLine); token.Type != TokenText {
+		return token
+	}
+
+	// Try structural tokens
+	if token := l.checkStructuralTokens(normalizedLine); token.Type != TokenText {
+		return token
+	}
+
+	// Try list tokens
+	if token := l.checkListTokens(normalizedLine); token.Type != TokenText {
+		return token
+	}
+
+	// Try formatting tokens
+	if token := l.checkFormattingTokens(normalizedLine); token.Type != TokenText {
+		return token
+	}
+
+	// Default to regular text
+	return Token{
+		Type:    TokenText,
+		Content: normalizedLine,
+	}
+}
+
+// normalizeLineIndentation calculates indentation and returns the trimmed line.
+func (l *Lexer) normalizeLineIndentation(line string) string {
+	// Calculate indentation (though not currently used in token creation)
 	indent := 0
 	for _, r := range line {
 		if r == ' ' {
@@ -67,29 +99,14 @@ func (l *Lexer) Tokenize(line string) Token {
 		}
 	}
 
-	line = strings.TrimLeft(line, " \t")
+	return strings.TrimLeft(line, " \t")
+}
 
-	// Check for heading underline
-	if l.patterns.headingUnderline.MatchString(line) {
-		return Token{
-			Type:    TokenHeadingUnderline,
-			Content: line,
-		}
-	}
-
-	// Check for translation blocks
-	if matches := l.patterns.transBlock.FindStringSubmatch(line); len(matches) > 1 {
-		return Token{
-			Type:    TokenTransBlock,
-			Content: matches[1],
-		}
-	}
-
+// checkDirectiveTokens checks for directive-related tokens including meta, code blocks, and custom directives.
+func (l *Lexer) checkDirectiveTokens(line string) Token {
 	// Check for meta directive
 	if l.patterns.meta.MatchString(line) {
-		return Token{
-			Type: TokenMeta,
-		}
+		return Token{Type: TokenMeta}
 	}
 
 	// Check for code block
@@ -111,6 +128,56 @@ func (l *Lexer) Tokenize(line string) Token {
 		}
 	}
 
+	return Token{Type: TokenText}
+}
+
+// checkStructuralTokens checks for structural elements like headings, transitions, and translation blocks.
+func (l *Lexer) checkStructuralTokens(line string) Token {
+	// Check for basic structural elements first
+	if token := l.checkBasicStructural(line); token.Type != TokenText {
+		return token
+	}
+
+	// Check for content blocks
+	if token := l.checkContentBlocks(line); token.Type != TokenText {
+		return token
+	}
+
+	return Token{Type: TokenText}
+}
+
+// checkBasicStructural checks for basic structural elements like headings and transitions.
+func (l *Lexer) checkBasicStructural(line string) Token {
+	// Check for heading underline
+	if l.patterns.headingUnderline.MatchString(line) {
+		return Token{
+			Type:    TokenHeadingUnderline,
+			Content: line,
+		}
+	}
+
+	// Check for translation blocks
+	if matches := l.patterns.transBlock.FindStringSubmatch(line); len(matches) > 1 {
+		return Token{
+			Type:    TokenTransBlock,
+			Content: matches[1],
+		}
+	}
+
+	// Check for transitions
+	if l.patterns.IsTransition(line) {
+		transChar := l.patterns.TransitionChar(line)
+		return Token{
+			Type:    TokenTransition,
+			Content: string(transChar),
+		}
+	}
+
+	return Token{Type: TokenText}
+}
+
+// checkContentBlocks checks for content-containing blocks like quotes, comments, and line blocks.
+func (l *Lexer) checkContentBlocks(line string) Token {
 	// Check for block quote
 	if matches := l.patterns.blockQuote.FindStringSubmatch(line); len(matches) > 1 {
 		attribution := ""
@@ -131,6 +198,20 @@ func (l *Lexer) Tokenize(line string) Token {
 			Content: matches[1],
 		}
 	}
+
+	// Check for line block (poetry-style line with | prefix)
+	if matches := l.patterns.lineBlock.FindStringSubmatch(line); len(matches) > 0 {
+		return Token{
+			Type:    TokenLineBlock,
+			Content: strings.TrimSpace(matches[1]),
+		}
+	}
+
+	return Token{Type: TokenText}
+}
+
+// checkListTokens checks for bullet and enumerated list items.
+func (l *Lexer) checkListTokens(line string) Token {
 	// Check for bullet list
 	if matches := l.patterns.bulletList.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
@@ -149,6 +230,11 @@ func (l *Lexer) Tokenize(line string) Token {
 		}
 	}
 
+	return Token{Type: TokenText}
+}
+
+// checkFormattingTokens checks for inline formatting like emphasis and strong text.
+func (l *Lexer) checkFormattingTokens(line string) Token {
 	// Check for strong (bold text) - must come before emphasis to avoid conflict
 	if matches := l.patterns.strong.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
@@ -165,28 +251,7 @@ func (l *Lexer) Tokenize(line string) Token {
 		}
 	}
 
-	// Check for line block (poetry-style line with | prefix)
-	if matches := l.patterns.lineBlock.FindStringSubmatch(line); len(matches) > 0 {
-		return Token{
-			Type:    TokenLineBlock,
-			Content: strings.TrimSpace(matches[1]), // The content after the | character
-		}
-	}
-
-	// Check for transitions
-	if l.patterns.IsTransition(line) {
-		transChar := l.patterns.TransitionChar(line)
-		return Token{
-			Type:    TokenTransition,
-			Content: string(transChar),
-		}
-	}
-
-	// Regular text
-	return Token{
-		Type:    TokenText,
-		Content: line,
-	}
+	return Token{Type: TokenText}
 }
 
 func parseDirectiveArgs(line string) []string {

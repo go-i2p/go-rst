@@ -126,3 +126,55 @@ End of test.`
 		t.Errorf("Expected to find a code node in parsed document")
 	}
 }
+
+func TestParserContextResetBetweenParses(t *testing.T) {
+	noopTranslator := translator.NewNoopTranslator()
+	parser := NewParser(noopTranslator)
+
+	// First parse with an incomplete code block (missing blank line terminator)
+	incompleteCodeBlock := `.. code-block:: python
+    def incomplete():
+        return "no blank line after this"`
+
+	doc1 := parser.Parse(incompleteCodeBlock)
+	t.Logf("First parse returned %d nodes", len(doc1))
+
+	// Check if context is polluted
+	if parser.context.inCodeBlock {
+		t.Log("Context shows inCodeBlock=true after first parse (expected for this test)")
+	}
+
+	// Second parse with regular content - should not be affected by first parse
+	normalContent := `Regular paragraph content.
+
+This should be parsed normally.`
+
+	doc := parser.Parse(normalContent)
+	t.Logf("Second parse returned %d nodes", len(doc))
+
+	// Verify the second parse works correctly despite previous context pollution
+	if len(doc) == 0 {
+		t.Fatalf("Expected parsed nodes from second parse, got empty document")
+	}
+
+	// Should have paragraph nodes, not code block content
+	foundParagraph := false
+	for _, node := range doc {
+		if node.Type() == nodes.NodeParagraph {
+			foundParagraph = true
+			t.Logf("Found paragraph with content: %s", node.Content())
+			if strings.Contains(node.Content(), "Regular paragraph content") {
+				break
+			}
+		}
+	}
+
+	if !foundParagraph {
+		t.Errorf("Expected normal paragraph content in second parse, but parsing failed due to context pollution")
+	}
+
+	// Context should be clean after second parse
+	if parser.context.inCodeBlock {
+		t.Errorf("Parser context still shows inCodeBlock=true after second parse, indicating context was not reset")
+	}
+}

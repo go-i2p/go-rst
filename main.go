@@ -6,13 +6,36 @@ import (
 	"io/ioutil"
 	"log"
 
+	"github.com/go-i2p/go-rst/pkg/nodes"
 	"github.com/go-i2p/go-rst/pkg/parser"
 	"github.com/go-i2p/go-rst/pkg/renderer"
 	"github.com/go-i2p/go-rst/pkg/translator"
 )
 
+// Configuration holds command line configuration
+type Configuration struct {
+	rstFile       string
+	poFile        string
+	outFileFormat string
+	outFile       string
+	debug         bool
+}
+
 func main() {
-	// CLI flags
+	config := parseCommandLineFlags()
+	configureLogging(config.debug)
+	validateInputFlags(config)
+
+	content := readRSTFile(config.rstFile, config.debug)
+	translator := initializeTranslator(config.poFile, config.debug)
+	nodes := parseRSTContent(content, translator, config.debug)
+	renderOutput(nodes, config)
+
+	fmt.Printf("Successfully converted %s to %s\n", config.rstFile, config.outFile)
+}
+
+// parseCommandLineFlags extracts and validates command line flags
+func parseCommandLineFlags() Configuration {
 	rstFile := flag.String("rst", "", "Input RST file path")
 	poFile := flag.String("po", "", "Input PO file path for translations")
 	outFileFormat := flag.String("out-format", "html", "Output file format (html, pdf, markdown)")
@@ -20,80 +43,117 @@ func main() {
 	debug := flag.Bool("debug", false, "Enable debug logging")
 	flag.Parse()
 
-	if *debug {
+	return Configuration{
+		rstFile:       *rstFile,
+		poFile:        *poFile,
+		outFileFormat: *outFileFormat,
+		outFile:       *outFile,
+		debug:         *debug,
+	}
+}
+
+// configureLogging sets up logging configuration based on debug flag
+func configureLogging(debug bool) {
+	if debug {
 		log.SetFlags(log.Lshortfile | log.LstdFlags)
 	}
+}
 
-	// Validate input flags
-	if *rstFile == "" {
+// validateInputFlags checks required command line arguments
+func validateInputFlags(config Configuration) {
+	if config.rstFile == "" {
 		log.Fatal("Please provide an input RST file using -rst flag")
 	}
-	if *outFile == "" {
+	if config.outFile == "" {
 		log.Fatal("Please provide an output HTML file using -out flag")
 	}
+}
 
-	// Read RST content
-	content, err := ioutil.ReadFile(*rstFile)
+// readRSTFile reads and returns RST file content
+func readRSTFile(rstFile string, debug bool) []byte {
+	content, err := ioutil.ReadFile(rstFile)
 	if err != nil {
 		log.Fatalf("Failed to read RST file: %v", err)
 	}
 
-	if *debug {
-		log.Printf("Loaded RST file: %s", *rstFile)
+	if debug {
+		log.Printf("Loaded RST file: %s", rstFile)
 	}
 
-	// Initialize translator
-	trans, err := translator.NewPOTranslator(*poFile)
+	return content
+}
+
+// initializeTranslator creates and configures a translator instance
+func initializeTranslator(poFile string, debug bool) translator.Translator {
+	trans, err := translator.NewPOTranslator(poFile)
 	if err != nil {
 		log.Fatalf("Failed to initialize translator: %v", err)
 	}
 
-	if *debug && *poFile != "" {
-		log.Printf("Loaded PO file: %s", *poFile)
-		// Test translation
-		testStr := "This text will be translated"
-		translated := trans.Translate(testStr)
-		log.Printf("Translation test: '%s' -> '%s'", testStr, translated)
+	if debug && poFile != "" {
+		log.Printf("Loaded PO file: %s", poFile)
+		testTranslation(trans, debug)
 	}
 
-	// Initialize parser with translator
-	p := parser.NewParser(trans)
+	return trans
+}
 
-	// Parse RST content
+// testTranslation performs a test translation for debugging
+func testTranslation(trans translator.Translator, debug bool) {
+	testStr := "This text will be translated"
+	translated := trans.Translate(testStr)
+	log.Printf("Translation test: '%s' -> '%s'", testStr, translated)
+}
+
+// parseRSTContent parses RST content into nodes
+func parseRSTContent(content []byte, trans translator.Translator, debug bool) []nodes.Node {
+	p := parser.NewParser(trans)
 	nodes := p.Parse(string(content))
 
-	if *debug {
+	if debug {
 		log.Printf("Parsed %d nodes", len(nodes))
 	}
 
-	switch *outFileFormat {
-	case "html":
-		// Initialize HTML renderer
-		r := renderer.NewHTMLRenderer()
+	return nodes
+}
 
-		// Render HTML
-		html := r.RenderPretty(nodes)
-		WriteRendered(*outFile, []byte(html))
+// renderOutput renders nodes to the specified output format
+func renderOutput(nodes []nodes.Node, config Configuration) {
+	switch config.outFileFormat {
+	case "html":
+		renderHTML(nodes, config.outFile)
 	case "pdf":
-		// Initialize PDF renderer
-		r := renderer.NewPDFRenderer()
-		// Render PDF
-		err := r.Render(nodes)
-		if err != nil {
-			log.Fatalf("Failed to render PDF: %v", err)
-		}
-		r.SaveToFile(*outFile)
+		renderPDF(nodes, config.outFile)
 	case "markdown":
-		// Initialize Markdown renderer
-		r := renderer.NewMarkdownRenderer()
-		// Render Markdown
-		err := r.Render(nodes)
-		if err != nil {
-			log.Fatalf("Failed to render Markdown: %v", err)
-		}
-		WriteRendered(*outFile, []byte(r.String()))
+		renderMarkdown(nodes, config.outFile)
 	}
-	fmt.Printf("Successfully converted %s to %s\n", *rstFile, *outFile)
+}
+
+// renderHTML renders nodes to HTML format
+func renderHTML(nodes []nodes.Node, outFile string) {
+	r := renderer.NewHTMLRenderer()
+	html := r.RenderPretty(nodes)
+	WriteRendered(outFile, []byte(html))
+}
+
+// renderPDF renders nodes to PDF format
+func renderPDF(nodes []nodes.Node, outFile string) {
+	r := renderer.NewPDFRenderer()
+	err := r.Render(nodes)
+	if err != nil {
+		log.Fatalf("Failed to render PDF: %v", err)
+	}
+	r.SaveToFile(outFile)
+}
+
+// renderMarkdown renders nodes to Markdown format
+func renderMarkdown(nodes []nodes.Node, outFile string) {
+	r := renderer.NewMarkdownRenderer()
+	err := r.Render(nodes)
+	if err != nil {
+		log.Fatalf("Failed to render Markdown: %v", err)
+	}
+	WriteRendered(outFile, []byte(r.String()))
 }
 
 func WriteRendered(outFile string, doc []byte) {

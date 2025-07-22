@@ -7,9 +7,144 @@
     <h1>
       reStructuredText Markup Specification
     </h1>
+    <!-- _A ReStructuredText Primer: ../../user/rst/quickstart.html -->
+    <!-- _Quick reStructuredText: ../../user/rst/quickref.html -->
     <h2>
       Quick Syntax Overview
     </h2>
+    <ul>
+      <li>
+        Paragraphs_ (and `inline markup`_)::
+      </li>
+    </ul>
+    <strong>
+      strong emphasis
+    </strong>
+    <ul>
+      <li>
+        Five types of lists:
+      </li>
+    </ul>
+    <ol>
+      <li>
+        `Bullet lists`_::
+      </li>
+    </ol>
+    <ul>
+      <li>
+        This is a bullet list.
+      </li>
+      <li>
+        Bullets can be ``*``, ``+``, or ``-``.
+      </li>
+    </ul>
+    <ol>
+      <li>
+        `Enumerated lists`_::
+      </li>
+      <li>
+        This is an enumerated list.
+      </li>
+      <li>
+        Enumerators may be arabic numbers, letters, or roman
+      </li>
+      <li>
+        `Definition lists`_::
+      </li>
+      <li>
+        `Field lists`_::
+      </li>
+      <li>
+        `Option lists`_, for listing command-line options::
+      </li>
+    </ol>
+    <ul>
+      <li>
+        `Literal blocks`_::
+      </li>
+      <li>
+        `Block quotes`_::
+      </li>
+      <li>
+        `Doctest blocks`_::
+      </li>
+      <li>
+        Two syntaxes for tables_:
+      </li>
+    </ul>
+    <ol>
+      <li>
+        `Grid tables`_; complete, but complex and verbose::
+      </li>
+    </ol>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span        |
+      </div>
+    </div>
+    <ol>
+      <li>
+        `Simple tables`_; easy and compact, but limited::
+      </li>
+    </ol>
+    <ul>
+      <li>
+        `Explicit markup blocks`_ all begin with an explicit block marker,
+      </li>
+      <li>
+        Footnotes_::
+      </li>
+    </ul>
+    <!-- [1] A footnote contains body elements, consistently -->
+    <ul>
+      <li>
+        Citations_::
+      </li>
+    </ul>
+    <!-- [CIT2002] Just like a footnote, except the label is -->
+    <ul>
+      <li>
+        `Hyperlink targets`_::
+      </li>
+    </ul>
+    <!-- _Python: https://www.python.org -->
+    <!-- _example: -->
+    <ul>
+      <li>
+        Directives_::
+      </li>
+    </ul>
+    <img src="mylogo.png" alt="">
+    <ul>
+      <li>
+        `Substitution definitions`_::
+      </li>
+    </ul>
+    <!-- |symbol here| image:: symbol.png -->
+    <ul>
+      <li>
+        Comments_::
+      </li>
+    </ul>
     <h2>
       Syntax Details
     </h2>
@@ -22,22 +157,103 @@
     <h2>
       Indentation
     </h2>
+    <!-- Comments begin with two dots and a space.  Anything may -->
+    <ul>
+      <li>
+        list item content (multi-line contents of list items, and multiple
+      </li>
+      <li>
+        the content of `literal blocks`_, and
+      </li>
+      <li>
+        the content of `explicit markup blocks`_ (directives, footnotes, ...).
+      </li>
+      <li>
+        This is the first line of a bullet list
+      </li>
+    </ul>
     <h1>
       Escaping Mechanism
     </h1>
+    <!-- _escape: -->
+    <em>
+      backslash
+    </em>
+    <ul>
+      <li>
+        &#34;Escaping&#34; backslash characters are represented by NULL characters in
+      </li>
+      <li>
+        Escaped non-white characters are prevented from playing a role in any
+      </li>
+      <li>
+        Escaped whitespace characters are removed from the output document
+      </li>
+    </ul>
+    <!-- [#caveat] Please note that the reStructuredText specification and -->
+    <em>
+      reaches
+    </em>
+    <!-- [#uri-context] In contexts where Docutils expects a `URI-reference`_ -->
+    <!-- [#literal-context] -->
+    <em>
+      literal context
+    </em>
     <h1>
       Reference Names
     </h1>
-    <img src="mylogo.png" alt="">
+    <!-- _reference name: -->
+    <!-- _simple reference name: -->
+    <!-- _simple reference names: -->
+    <em>
+      Simple reference names
+    </em>
+    <!-- _phrase references: -->
+    <em>
+      phrase references
+    </em>
+    <!-- _my favorite programming language: https://www.python.org -->
+    <!-- _normalized reference names: -->
+    <ul>
+      <li>
+        whitespace is normalized (one or more spaces, horizontal or vertical
+      </li>
+      <li>
+        case is normalized (all alphabetic characters are converted to
+      </li>
+      <li>
+        `A HYPERLINK`_
+      </li>
+      <li>
+        `a    hyperlink`_
+      </li>
+      <li>
+        `A
+      </li>
+    </ul>
     <h1>
       Document Structure
     </h1>
+    <!-- [#case-forgiving] Matching `substitution references`_ to -->
     <h2>
       Document
     </h2>
+    <em>
+      document title
+    </em>
+    <em>
+      subtitle
+    </em>
     <h2>
       Sections
     </h2>
+    <!-- [#] The `&#34;title&#34;`_ directive sets the document&#39;s `metadata title`_ -->
+    <!-- _section title: -->
+    <!-- _section titles: -->
+    <em>
+      titles
+    </em>
+    <!-- [#] The key is the visual length of the title in a mono-spaced font. -->
     <h1>
       Section Title
     </h1>
@@ -53,6 +269,8 @@
     <h3>
       Section Title
     </h3>
+    <!-- [#] The following are all valid section title adornment -->
+    <hr class="docutils">
     <h2>
       Transitions
     </h2>
@@ -62,106 +280,2129 @@
     <h2>
       Paragraphs
     </h2>
+    <em>
+      not
+    </em>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        |
+      </div>
+      <div class="line">
+        paragraph                    |
+      </div>
+    </div>
     <h2>
       Bullet Lists
     </h2>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        |
+      </div>
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
+    <ul>
+      <li>
+        This is the first bullet list item.  The blank line above the
+      </li>
+      <li>
+        This is the first paragraph in the second item in the list.
+      </li>
+      <li>
+        This is a sublist.  The bullet lines up with the left edge of
+      </li>
+      <li>
+        This is the third item of the main list.
+      </li>
+    </ul>
+    <strong>
+      incorrectly
+    </strong>
+    <ul>
+      <li>
+        This first line is fine.
+      </li>
+      <li>
+        The following line appears to be a new sublist, but it is not:
+      </li>
+      <li>
+        This is a paragraph continuation, not a sublist (since there&#39;s
+      </li>
+      <li>
+        Warnings may be issued by the implementation.
+      </li>
+    </ul>
     <h2>
       Enumerated Lists
     </h2>
+    <div class="line-block">
+      <div class="line">
+        &#34;- &#34; | list item             |
+      </div>
+    </div>
+    <ul>
+      <li>
+        arabic numerals: 1, 2, 3, ... (no upper limit).
+      </li>
+      <li>
+        uppercase alphabet characters: A, B, C, ..., Z.
+      </li>
+      <li>
+        lower-case alphabet characters: a, b, c, ..., z.
+      </li>
+      <li>
+        uppercase Roman numerals: I, II, III, IV, ..., MMMMCMXCIX (4999).
+      </li>
+      <li>
+        lowercase Roman numerals: i, ii, iii, iv, ..., mmmmcmxcix (4999).
+      </li>
+      <li>
+        suffixed with a period: ``1.``, ``A.``, ``a.``, ``I.``, ``i.``.
+      </li>
+      <li>
+        surrounded by parentheses: ``(1)``, ``(A)``, ``(a)``, ``(I)``, ``(i)``.
+      </li>
+      <li>
+        suffixed with a right-parenthesis: ``1)``, ``A)``, ``a)``, ``I)``, ``i)``.
+      </li>
+      <li>
+        An enumerator is encountered which does not have the same format and
+      </li>
+      <li>
+        The enumerators are not in sequence (e.g., ``1.``, ``3.`` produces two
+      </li>
+    </ul>
+    <ol>
+      <li>
+        Einstein was a really
+      </li>
+      <li>
+        Einstein was a really smart dude.
+      </li>
+    </ol>
+    <ol>
+      <li>
+        Item 1 initial text.
+      </li>
+      <li>
+        a) Item 2a.
+      </li>
+    </ol>
     <h2>
       Definition Lists
     </h2>
+    <div class="line-block">
+      <div class="line">
+        &#34;1. &#34; | list item            |
+      </div>
+    </div>
+    <ul>
+      <li>
+        A `term` is a simple one-line word or phrase.  Escape_ a leading hyphen
+      </li>
+      <li>
+        Optional `classifiers` may follow the term on the same line, each after
+      </li>
+      <li>
+        A `definition` is a block indented relative to the term, and may
+      </li>
+      <li>
+        As a dictionary or glossary.  The term is the word itself, a
+      </li>
+      <li>
+        To describe program variables.  The term is the variable name, a
+      </li>
+    </ul>
+    <div class="line-block">
+      <div class="line">
+        term [ &#34; : &#34; classifier ]* |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        term [ &#34; : &#34; classifier ]* |
+      </div>
+      <div class="line">
+        definition                 |
+      </div>
+    </div>
     <h2>
       Field Lists
     </h2>
+    <div class="line-block">
+      <div class="line">
+        term [ &#34; : &#34; classifier ]* |
+      </div>
+      <div class="line">
+        definition                 |
+      </div>
+      <div class="line">
+        (body elements)+           |
+      </div>
+    </div>
+    <!-- _field names: -->
+    <em>
+      field names
+    </em>
+    <ul>
+      <li>
+        Myself
+      </li>
+      <li>
+        I
+      </li>
+    </ul>
+    <div class="line-block">
+      <div class="line">
+        &#34;:&#34; field name &#34;:&#34; | field body           |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        &#34;:&#34; field name &#34;:&#34; | field body           |
+      </div>
+      <div class="line">
+        (body elements)+                  |
+      </div>
+    </div>
+    <!-- [#] Up to DocutilsÂ 0.14, field markers were not recognized when -->
+    <!-- [#PreBibliographic] -->
+    <!-- _bibliographic field names: -->
+    <ul>
+      <li>
+        a single paragraph consisting of a list of authors, separated by
+      </li>
+      <li>
+        multiple paragraphs (one per author) or
+      </li>
+      <li>
+        a bullet list whose elements each contain a single paragraph per author.
+      </li>
+    </ul>
+    <!-- [#i18n] Docutils supports localised bibliographic field names and -->
+    <!-- [#] Revision Control System. -->
+    <!-- [#] RCS keyword processing can be turned off (unimplemented). -->
+    <!-- [#] Concurrent Versions System.  CVS uses the same keywords as RCS. -->
+    <!-- [#] Subversion Versions System. Uses the same keywords as RCS. -->
     <h2>
       Option Lists
     </h2>
+    <!-- _option list: -->
+    <ul>
+      <li>
+        Short POSIX options consist of one dash and an option letter.
+      </li>
+      <li>
+        Long POSIX options consist of two dashes and an option word; some
+      </li>
+      <li>
+        Old GNU-style &#34;plus&#34; options consist of one plus and an option
+      </li>
+      <li>
+        DOS/VMS options consist of a slash and an option letter or word.
+      </li>
+      <li>
+        Begins with a letter (``[a-zA-Z]``) and subsequently consists of
+      </li>
+      <li>
+        Begins with an open-angle-bracket (``&lt;``) and ends with a
+      </li>
+    </ul>
+    <div class="line-block">
+      <div class="line">
+        option [&#34; &#34; argument] &#34;  &#34; | description |
+      </div>
+    </div>
     <h2>
       Literal Blocks
     </h2>
+    <div class="line-block">
+      <div class="line">
+        option [&#34; &#34; argument] &#34;  &#34; | description |
+      </div>
+      <div class="line">
+        (body elements)+                 |
+      </div>
+    </div>
+    <em>
+      one
+    </em>
+    <ol>
+      <li>
+        Expanded form::
+      </li>
+      <li>
+        Partially minimized form::
+      </li>
+      <li>
+        Fully minimized form::
+      </li>
+    </ol>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        indented literal block    |
+      </div>
+    </div>
+    <!-- [#] -->
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+    </div>
     <h2>
       Line Blocks
     </h2>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+      <div class="line">
+        I&#39;m absolutely skint.
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+      <div class="line">
+        I&#39;m absolutely skint.
+      </div>
+      <div class="line">
+        But I&#39;m expecting a postal order and I can pay you back
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+      <div class="line">
+        I&#39;m absolutely skint.
+      </div>
+      <div class="line">
+        But I&#39;m expecting a postal order and I can pay you back
+      </div>
+      <div class="line">
+        Love, Ewan.
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+      <div class="line">
+        I&#39;m absolutely skint.
+      </div>
+      <div class="line">
+        But I&#39;m expecting a postal order and I can pay you back
+      </div>
+      <div class="line">
+        Love, Ewan.
+      </div>
+      <div class="line">
+        A one, two, a one two three four
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+      <div class="line">
+        I&#39;m absolutely skint.
+      </div>
+      <div class="line">
+        But I&#39;m expecting a postal order and I can pay you back
+      </div>
+      <div class="line">
+        Love, Ewan.
+      </div>
+      <div class="line">
+        A one, two, a one two three four
+      </div>
+      <div class="line"></div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        paragraph                    |
+      </div>
+      <div class="line">
+        (ends with &#34;::&#34;)             |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; per-line-quoted          |
+      </div>
+      <div class="line">
+        &#34;&gt;&#34; contiguous literal block |
+      </div>
+      <div class="line">
+        Lend us a couple of bob till Thursday.
+      </div>
+      <div class="line">
+        I&#39;m absolutely skint.
+      </div>
+      <div class="line">
+        But I&#39;m expecting a postal order and I can pay you back
+      </div>
+      <div class="line">
+        Love, Ewan.
+      </div>
+      <div class="line">
+        A one, two, a one two three four
+      </div>
+      <div class="line"></div>
+      <div class="line">
+        Half a bee, philosophically,
+      </div>
+    </div>
+    <em>
+      ipso facto
+    </em>
+    <div class="line-block">
+      <div class="line">
+        But half the bee has got to be,
+      </div>
+    </div>
+    <em>
+      vis a vis
+    </em>
+    <div class="line-block">
+      <div class="line"></div>
+    </div>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+      <div class="line">
+        or not to be an entire bee,
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+      <div class="line">
+        or not to be an entire bee,
+      </div>
+      <div class="line">
+        when half the bee is not a bee,
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+      <div class="line">
+        or not to be an entire bee,
+      </div>
+      <div class="line">
+        when half the bee is not a bee,
+      </div>
+      <div class="line">
+        due to some ancient injury?
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+      <div class="line">
+        or not to be an entire bee,
+      </div>
+      <div class="line">
+        when half the bee is not a bee,
+      </div>
+      <div class="line">
+        due to some ancient injury?
+      </div>
+      <div class="line"></div>
+    </div>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+      <div class="line">
+        or not to be an entire bee,
+      </div>
+      <div class="line">
+        when half the bee is not a bee,
+      </div>
+      <div class="line">
+        due to some ancient injury?
+      </div>
+      <div class="line"></div>
+      <div class="line">
+        Singing...
+      </div>
+    </div>
     <h2>
       Block Quotes
     </h2>
+    <div class="line-block">
+      <div class="line"></div>
+      <div class="line">
+        But can a bee be said to be
+      </div>
+      <div class="line">
+        or not to be an entire bee,
+      </div>
+      <div class="line">
+        when half the bee is not a bee,
+      </div>
+      <div class="line">
+        due to some ancient injury?
+      </div>
+      <div class="line"></div>
+      <div class="line">
+        Singing...
+      </div>
+      <div class="line">
+        &#34;| &#34; | line                  |
+      </div>
+    </div>
+    <ul>
+      <li>
+        List item.
+      </li>
+    </ul>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+      <div class="line">
+        indentation)                 |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+      <div class="line">
+        indentation)                 |
+      </div>
+      <div class="line">
+        block quote               |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+      <div class="line">
+        indentation)                 |
+      </div>
+      <div class="line">
+        block quote               |
+      </div>
+      <div class="line">
+        (body elements)+          |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+      <div class="line">
+        indentation)                 |
+      </div>
+      <div class="line">
+        block quote               |
+      </div>
+      <div class="line">
+        (body elements)+          |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+      <div class="line">
+        indentation)                 |
+      </div>
+      <div class="line">
+        block quote               |
+      </div>
+      <div class="line">
+        (body elements)+          |
+      </div>
+      <div class="line">
+        |
+      </div>
+      <div class="line">
+        -- attribution text       |
+      </div>
+    </div>
     <h2>
       Doctest Blocks
     </h2>
+    <div class="line-block">
+      <div class="line">
+        (current level of            |
+      </div>
+      <div class="line">
+        indentation)                 |
+      </div>
+      <div class="line">
+        block quote               |
+      </div>
+      <div class="line">
+        (body elements)+          |
+      </div>
+      <div class="line">
+        |
+      </div>
+      <div class="line">
+        -- attribution text       |
+      </div>
+      <div class="line">
+        (optional)             |
+      </div>
+    </div>
     <h2>
       Tables
     </h2>
+    <em>
+      will
+    </em>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |  Use the command ``ls | more``.  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |  Use the command ``ls | more``.  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |  Use the command ``ls | more``.  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |  Use the command ``ls | more``.  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |  Use the command ``ls | more``.  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        |                                  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        Header row, column 1   | Header 2   | Header 3 | Header 4 |
+      </div>
+      <div class="line">
+        (header rows optional) |            |          |          |
+      </div>
+      <div class="line">
+        body row 1, column 1   | column 2   | column 3 | column 4 |
+      </div>
+      <div class="line">
+        body row 2             | Cells may span columns.          |
+      </div>
+      <div class="line">
+        body row 3             | Cells may  | - Table cells       |
+      </div>
+      <div class="line">
+        body row 4             |            | - body elements.    |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        |  Use the command ``ls | more``.  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+      <div class="line">
+        row 1, col 1 | column 2 | column 3  | column 4  |
+      </div>
+      <div class="line">
+        row 2        | Use the command ``ls | more``.   |
+      </div>
+      <div class="line">
+        |                                  |
+      </div>
+      <div class="line">
+        row 3        |          |           |           |
+      </div>
+    </div>
+    <em>
+      must
+    </em>
+    <em>
+      not
+    </em>
+    <em>
+      must
+    </em>
+    <ul>
+      <li>
+        an empty comment (``..``), which may be omitted from the processed
+      </li>
+      <li>
+        a backslash escape followed by a space
+      </li>
+    </ul>
+    <em>
+      between
+    </em>
+    <em>
+      within
+    </em>
     <h2>
       Explicit Markup Blocks
     </h2>
+    <ul>
+      <li>
+        Second item in bullet
+      </li>
+      <li>
+        whose first line begins with ``..`` followed by whitespace
+      </li>
+    </ul>
+    <em>
+      explicit markup start
+    </em>
+    <ul>
+      <li>
+        whose second and subsequent lines (if any) are indented
+      </li>
+      <li>
+        which ends before an unindented line.
+      </li>
+    </ul>
+    <!-- _footnote: -->
+    <ul>
+      <li>
+        a whole decimal number consisting of one or more digits,
+      </li>
+      <li>
+        a single ``#`` (denoting `auto-numbered footnotes`_),
+      </li>
+      <li>
+        a ``#`` followed by a `simple reference name`_ (an `autonumber label`_),
+      </li>
+      <li>
+        a single ``*`` (denoting `auto-symbol footnotes`_).
+      </li>
+    </ul>
+    <!-- [1] Body elements go here. -->
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | &#34;[&#34; label &#34;]&#34; footnote  |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | &#34;[&#34; label &#34;]&#34; footnote  |
+      </div>
+      <div class="line">
+        (body elements)+        |
+      </div>
+    </div>
+    <!-- _autonumber label: `autonumber labels`_ -->
+    <ul>
+      <li>
+        On the footnote itself, they generate a hyperlink target whose name
+      </li>
+      <li>
+        They allow an automatically numbered footnote to be referred to more
+      </li>
+    </ul>
+    <!-- [#note] This is the footnote labeled &#34;note&#34;. -->
+    <!-- [#] This is footnote 1. -->
+    <!-- [#] This is footnote 2. -->
+    <!-- [#] This is footnote 3. -->
+    <!-- [*] This is the footnote. -->
+    <ul>
+      <li>
+        asterisk/star (``*``)
+      </li>
+      <li>
+        dagger (``â€ ``, U+02020)
+      </li>
+      <li>
+        double dagger (``â€¡``, U+02021)
+      </li>
+      <li>
+        section mark (``Â§``, U+000A7)
+      </li>
+      <li>
+        pilcrow or paragraph mark (``Â¶``, U+000B6)
+      </li>
+      <li>
+        number sign (``#``)
+      </li>
+      <li>
+        spade suit (``â™ ``, U+02660)
+      </li>
+      <li>
+        heart suit (``â™¥``, U+02665)
+      </li>
+      <li>
+        diamond suit (``â™¦``, U+02666)
+      </li>
+      <li>
+        club suit (``â™£``, U+02663)
+      </li>
+    </ul>
+    <!-- [#] This list was inspired by the list of symbols for &#34;Note -->
+    <!-- [2] This footnote is labeled manually, so its number is fixed. -->
+    <!-- [#label] This autonumber-labeled footnote will be labeled &#34;1&#34;. -->
+    <!-- [#] This footnote will be labeled &#34;3&#34;.  It is the second -->
+    <!-- [CIT2002] This is the citation.  It&#39;s just like a footnote, -->
+    <!-- _explicit hyperlink targets: -->
+    <div class="line-block">
+      <div class="line">
+        `embedded URIs and aliases`_
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        `embedded URIs and aliases`_
+      </div>
+      <div class="line">
+        `inline internal targets`_
+      </div>
+    </div>
+    <em>
+      explicit hyperlink targets
+    </em>
+    <em>
+      Named hyperlink targets
+    </em>
+    <!-- _hyperlink-name: link-block -->
+    <em>
+      Anonymous hyperlink targets
+    </em>
+    <!-- __: anonymous-hyperlink-target-link-block -->
+    <ol>
+      <li>
+        _`Internal hyperlink targets` have empty link blocks.  They provide
+      </li>
+    </ol>
+    <!-- _target: -->
+    <!-- _target1: -->
+    <!-- _target2: -->
+    <!-- _Python DOC-SIG mailing list archive: -->
+    <!-- _archive: -->
+    <!-- _Doc-SIG: https://mail.python.org/pipermail/doc-sig/ -->
+    <!-- [#] Works also, if the internal hyperlink target is &#34;nested&#34; at the -->
+    <ul>
+      <li>
+        bullet list
+      </li>
+    </ul>
+    <!-- _`second item`: -->
+    <ul>
+      <li>
+        second item, with hyperlink target.
+      </li>
+    </ul>
+    <ol>
+      <li>
+        _`External hyperlink targets` have a URI-reference_ or email address
+      </li>
+    </ol>
+    <!-- _Python: https://www.python.org -->
+    <!-- _Write to me: jdoe@example.com -->
+    <!-- _one-liner: https://docutils.sourceforge.io/rst.html -->
+    <!-- _starts-on-this-line: https:// -->
+    <!-- _entirely-below: -->
+    <!-- _reference: ../local\ path\ with\ spaces.html -->
+    <!-- _link: underscore\_ -->
+    <ol>
+      <li>
+        _`Indirect hyperlink targets` have a hyperlink reference in their
+      </li>
+    </ol>
+    <!-- _one: two_ -->
+    <!-- _two: three_ -->
+    <!-- _three: -->
+    <!-- _one-liner: `A HYPERLINK`_ -->
+    <!-- _entirely-below: -->
+    <!-- _split: `A -->
+    <ul>
+      <li>
+        the phrase must be enclosed in backquotes::
+      </li>
+    </ul>
+    <!-- _`FAQTS: Computers: Programming: Languages: Python`: -->
+    <ul>
+      <li>
+        or the colon(s) must be backslash-escaped in the link target::
+      </li>
+    </ul>
+    <!-- _Chapter One\: &#34;Tadpole Days&#34;: -->
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | &#34;_&#34; name &#34;:&#34; link    |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | &#34;_&#34; name &#34;:&#34; link    |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
+    <!-- _anonymous: -->
+    <!-- __: https://www.python.org -->
     <img src="mylogo.jpeg" alt="">
     <div class="note"></div>
+    <ul>
+      <li>
+        Here is a bullet list.
+      </li>
+    </ul>
+    <em>
+      directive marker
+    </em>
+    <ul>
+      <li>
+        Two colons are distinctive, and unlikely to be used in common text.
+      </li>
+      <li>
+        Two colons avoids clashes with common comment text like::
+      </li>
+    </ul>
+    <!-- Danger: modify at your own risk! -->
+    <ul>
+      <li>
+        If an implementation of reStructuredText does not recognize a
+      </li>
+    </ul>
+    <ol>
+      <li>
+        Directive arguments.
+      </li>
+      <li>
+        Directive options.
+      </li>
+      <li>
+        Directive content.
+      </li>
+    </ol>
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | directive type &#34;::&#34; directive |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | directive type &#34;::&#34; directive |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
+    <!-- |biohazard| image:: biohazard.png -->
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | &#34;|&#34; substitution text &#34;| &#34; directive type &#34;::&#34; data |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | &#34;|&#34; substitution text &#34;| &#34; directive type &#34;::&#34; data |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
+    <!-- _inline-compatible directive: -->
+    <em>
+      inline-compatible directives
+    </em>
+    <div class="line-block">
+      <div class="line">
+        Michael| and |Jon| are our widget-wranglers.
+      </div>
+    </div>
+    <!-- |Michael| user:: mjones -->
+    <!-- |Jon|     user:: jhl -->
+    <div class="line-block">
+      <div class="line">
+        The Transparent Society| offers a fascinating alternate view
+      </div>
+    </div>
+    <!-- |The Transparent Society| book:: isbn=0738201448 -->
+    <!-- |runString| function:: module=xml.xslt class=Processor -->
+    <!-- @@@ Inline styling is better served with &#34;custom interpreted text&#34;. -->
+    <!-- |the text in Texas| style:: big -->
+    <!-- @@@ This needs to be rethought &amp; rewritten or removed: -->
+    <!-- [#] There may be sufficient need for a &#34;style&#34; mechanism to -->
+    <!-- |name| tal:: replace user/getUserName -->
+    <!-- This is a comment -->
+    <div class="line-block">
+      <div class="line">
+        even| this:: !
+      </div>
+    </div>
+    <!-- [this] however, is a citation. -->
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | comment              |
+      </div>
+    </div>
+    <div class="line-block">
+      <div class="line">
+        &#34;.. &#34; | comment              |
+      </div>
+      <div class="line">
+        |
+      </div>
+    </div>
     <h1>
       Implicit Hyperlink Targets
     </h1>
+    <strong>
+      not
+    </strong>
+    <ol>
+      <li>
+        `Explicit hyperlink targets`_ override any implicit targets having
+      </li>
+      <li>
+        Duplicate implicit hyperlink targets are removed, and level-1
+      </li>
+      <li>
+        Duplicate explicit hyperlink targets are removed, and level-2
+      </li>
+    </ol>
     <h1>
       Inline Markup
     </h1>
+    <em>
+      unique
+    </em>
     <h2>
       Inline markup recognition rules
     </h2>
+    <ul>
+      <li>
+        emphasis_: ``*``
+      </li>
+      <li>
+        `strong emphasis`_: ``**``
+      </li>
+      <li>
+        `interpreted text`_: `````
+      </li>
+      <li>
+        `inline literals`_: ``````
+      </li>
+      <li>
+        `substitution references`_: ``|``
+      </li>
+      <li>
+        `inline internal targets`_: ``_``` and `````
+      </li>
+      <li>
+        `footnote references`_: ``[`` and ``]_``
+      </li>
+      <li>
+        `hyperlink references`_: ````` and ``\`_`` (phrases), or just a
+      </li>
+    </ul>
+    <ol>
+      <li>
+        Inline markup start-strings must be immediately followed by
+      </li>
+      <li>
+        Inline markup end-strings must be immediately preceded by
+      </li>
+      <li>
+        The inline markup end-string must be separated by at least one
+      </li>
+      <li>
+        Both, inline markup start-string and end-string must not be preceded by
+      </li>
+      <li>
+        If an inline markup start-string is immediately preceded by one of the
+      </li>
+      <li>
+        Inline markup start-strings must start a text block or be
+      </li>
+    </ol>
+    <ul>
+      <li>
+        whitespace,
+      </li>
+      <li>
+        one of the ASCII characters ``- : / &#39; &#34; &lt; ( [ {``
+      </li>
+      <li>
+        or a similar non-ASCII punctuation character. [#pre-chars]_
+      </li>
+    </ul>
+    <ol>
+      <li>
+        Inline markup end-strings must end a text block or be immediately
+      </li>
+    </ol>
+    <ul>
+      <li>
+        whitespace,
+      </li>
+      <li>
+        one of the ASCII characters ``- . , : ; ! ? \ / &#39; &#34; ) ] } &gt;``
+      </li>
+      <li>
+        or a similar non-ASCII punctuation character. [#post-chars]_
+      </li>
+    </ul>
+    <!-- [#openers]    `Unicode categories`_ `Ps` (Open), `Pi` (Initial quote), -->
+    <!-- [#closers]    Unicode categories `Pe` (Close), `Pi` (Initial quote), -->
+    <!-- [#pre-chars]  Unicode categories `Ps` (Open), `Pi` (Initial quote), -->
+    <!-- [#post-chars] Unicode categories  `Pe` (Close), `Pi` (Initial quote), -->
+    <!-- [#uni-version] The category of some characters changed with the -->
+    <!-- _Unicode categories: -->
+    <!-- _Unicode version 5.2.0: https://www.unicode.org/Public/5.2.0/ -->
+    <!-- _quotation marks in international usage: -->
+    <ul>
+      <li>
+        2 * x  a ** b  (* BOM32_* ` `` _ __ | (breaks rule 1)
+      </li>
+      <li>
+        || (breaks rule 3)
+      </li>
+      <li>
+        &#34;*&#34; &#39;|&#39; (*) [*] {*} &lt;*&gt;
+      </li>
+    </ul>
+    <em>
+      â€™ â€š
+    </em>
+    <em>
+      â€ â€ž
+    </em>
+    <em>
+      Â« â€º
+    </em>
+    <ul>
+      <li>
+        2*x a**b O(N**2) e**(x*y) f(x)*f(y) a|b file*.*
+      </li>
+      <li>
+        ``*2 * x  *a **b *.rst*`` (breaks rule 2; renders as &#34;*2 * x  *a **b *.rst*&#34;)
+      </li>
+      <li>
+        ``*2*x a**b O(N**2) e**(x*y) f(x)*f(y) a*(1+2)*``
+      </li>
+    </ul>
+    <strong>
+      b O(N
+    </strong>
+    <em>
+      do
+    </em>
+    <em>
+      4, class_,
+    </em>
     <h2>
       Recognition order
     </h2>
+    <em>
+      4, class\_, \
+    </em>
     <h2>
       Character-Level Inline Markup
     </h2>
+    <ul>
+      <li>
+        Asterisks: `Strong emphasis`_ (``**``) is recognized before emphasis_
+      </li>
+      <li>
+        Backquotes: `Inline literals`_ (``````), `inline internal targets`_
+      </li>
+      <li>
+        Trailing underscores: Footnote references (``[`` + label + ``]_``) and
+      </li>
+      <li>
+        Vertical bars: `Substitution references`_ (``|``) are independently
+      </li>
+      <li>
+        `Standalone hyperlinks`_ are the last to be recognized.
+      </li>
+    </ul>
+    <em>
+      re
+    </em>
     <h2>
       Emphasis
     </h2>
     <h2>
       Strong Emphasis
     </h2>
+    <em>
+      emphasized text
+    </em>
     <h2>
       Interpreted Text
     </h2>
+    <strong>
+      strong text
+    </strong>
+    <em>
+      role
+    </em>
+    <em>
+      default role
+    </em>
+    <em>
+      standard roles
+    </em>
+    <em>
+      default role
+    </em>
     <h2>
       Inline Literals
     </h2>
+    <strong>
+      not
+    </strong>
     <h2>
       Hyperlink References
     </h2>
+    <em>
+      not
+    </em>
+    <!--                   phrase_     `````\    ``\`_`` -->
+    <!--                   phrase      `````\    ``\`__`` -->
+    <!-- _simple:    `simple reference names`_ -->
+    <!-- _phrase:    `phrase references`_ -->
+    <ol>
+      <li>
+        In the text body, there is a source link, a reference name with a
+      </li>
+      <li>
+        A matching target link must exist in the document. It may be embedded
+      </li>
+    </ol>
+    <!-- _Python home page: https://www.python.org -->
+    <!-- _link: `Python home page`_ -->
+    <em>
+      named
+    </em>
+    <em>
+      not
+    </em>
+    <strong>
+      strongly recommended
+    </strong>
     <h2>
       Inline Internal Targets
     </h2>
     <h2>
       Footnote References
     </h2>
+    <em>
+      only
+    </em>
+    <ul>
+      <li>
+        one or more digits (i.e., a number),
+      </li>
+      <li>
+        a single ``#`` (denoting `auto-numbered footnotes`_),
+      </li>
+      <li>
+        a ``#`` followed by a simple `reference name`_ (an `autonumber label`_),
+      </li>
+      <li>
+        a single ``*`` (denoting `auto-symbol footnotes`_).
+      </li>
+    </ul>
     <h2>
       Citation References
     </h2>
     <h2>
       Substitution References
     </h2>
+    <!-- [1] Read The Fine Manual -->
     <h2>
       Standalone Hyperlinks
     </h2>
+    <!-- _standalone hyperlink: -->
+    <ol>
+      <li>
+        URIs with known schemes
+      </li>
+      <li>
+        Standalone email addresses, which are treated as if they were
+      </li>
+    </ol>
     <h1>
       Measures and Units
     </h1>
+    <!-- [#URI] Uniform Resource Identifier.  URIs are a general form of -->
+    <em>
+      Measures
+    </em>
     <h2>
       Length Units
     </h2>
+    <!-- _directive option: `directive options`_ -->
+    <!-- [#] Up to Docutils 0.21, support was restricted to the -->
+    <!-- [#] The unit &#34;Q&#34; is common in Japanese typesetting. -->
+    <!-- [#] In LaTeX, the default definition is 1â€¯px = 1â€¯pt = 1/72â€¯in -->
+    <!-- _length units in CSS2: -->
+    <!-- _length units in CSS3: https://www.w3.org/TR/css-values-3/#lengths -->
     <h2>
       Percentage Unit
     </h2>
     <h2>
       Error Handling
     </h2>
-    <h1>
-      .. References
-    </h1>
-    <h2>
-      .. internal
-    </h2>
-    <h2>
-      .. external
-    </h2>
+    <!-- _XSL units: https://www.w3.org/TR/xsl/#d0e5752 -->
+    <!-- References -->
+    <!-- internal -->
+    <!-- _reStructuredText: https://docutils.sourceforge.io/rst.html -->
+    <!-- _Docutils: https://docutils.sourceforge.io/ -->
+    <!-- _writer documentation: ../../index.html#writer-specific -->
+    <!-- _character_level_inline_markup: -->
+    <!-- _footnote_references: -->
+    <!-- _language_code: ../../user/config.html#language-code -->
+    <!-- _output encoding error handler: -->
+    <!-- _strip_comments: ../../user/config.html#strip-comments -->
+    <!-- _tab_width: ../../user/config.html#tab-width -->
+    <!-- _trim_footnote_reference_space: -->
+    <!-- _reStructuredText Directives: directives.html -->
+    <!-- _&#34;admonition&#34;: directives.html#admonitions -->
+    <!-- _&#34;code&#34;: directives.html#code -->
+    <!-- _&#34;csv-table&#34;: directives.html#csv-table -->
+    <!-- _&#34;date&#34;: directives.html#date -->
+    <!-- _&#34;default-role&#34;: directives.html#default-role -->
+    <!-- _&#34;figure&#34;: directives.html#figure -->
+    <!-- _&#34;image&#34;: directives.html#image -->
+    <!-- _&#34;list-table&#34;: directives.html#list-table -->
+    <!-- _&#34;math&#34;: directives.html#math -->
+    <!-- _&#34;meta&#34;: directives.html#metadata -->
+    <!-- _&#34;raw&#34;: directives.html#raw -->
+    <!-- _&#34;replace&#34;: directives.html#replace -->
+    <!-- _&#34;role&#34; directive: directives.html#custom-interpreted-text-roles -->
+    <!-- _&#34;table&#34;: directives.html#table -->
+    <!-- _&#34;title&#34;: directives.html#metadata-document-title -->
+    <!-- _&#34;unicode&#34;: directives.html#unicode -->
+    <!-- _custom roles: directives.html#role -->
+    <!-- _inline images: directives.html#inline-images -->
+    <!-- _reStructuredText Interpreted Text Roles: roles.html -->
+    <!-- _`:code:`: roles.html#code -->
+    <!-- _`:emphasis:`: roles.html#emphasis -->
+    <!-- _`:literal:`: roles.html#literal -->
+    <!-- _`:raw:`: roles.html#raw -->
+    <!-- _`:strong:`: roles.html#strong -->
+    <!-- _Document Tree: -->
+    <!-- _The Docutils Document Tree: ../doctree.html -->
+    <!-- _`&lt;address&gt;`: ../doctree.html#address -->
+    <!-- _`&lt;attribution&gt;`: ../doctree.html#attribution -->
+    <!-- _`&lt;author&gt;`: ../doctree.html#author -->
+    <!-- _`&lt;authors&gt;`: ../doctree.html#authors -->
+    <!-- _`&lt;block_quote&gt;`: ../doctree.html#block-quote -->
+    <!-- _`&lt;bullet_list&gt;`: ../doctree.html#bullet-list -->
+    <!-- _`&lt;citation&gt;`: ../doctree.html#citation -->
+    <!-- _`&lt;citation_reference&gt;`: ../doctree.html#citation-reference -->
+    <!-- _`&lt;classifier&gt;`: ../doctree.html#classifier -->
+    <!-- _`&lt;colspec&gt;`: ../doctree.html#colspec -->
+    <!-- _`&lt;comment&gt;`: ../doctree.html#comment -->
+    <!-- _`&lt;contact&gt;`: ../doctree.html#contact -->
+    <!-- _`&lt;copyright&gt;`: ../doctree.html#copyright -->
+    <!-- _`&lt;date&gt;`: ../doctree.html#date -->
+    <!-- _`&lt;definition&gt;`: ../doctree.html#definition -->
+    <!-- _`&lt;definition_list&gt;`: ../doctree.html#definition-list -->
+    <!-- _`&lt;definition_list_item&gt;`: ../doctree.html#definition-list-item -->
+    <!-- _`&lt;description&gt;`: ../doctree.html#description -->
+    <!-- _`&lt;docinfo&gt;`: ../doctree.html#docinfo -->
+    <!-- _`&lt;doctest_block&gt;`: ../doctree.html#doctest-block -->
+    <!-- _`&lt;document&gt;`: ../doctree.html#document -->
+    <!-- _`&lt;entry&gt;`: ../doctree.html#entry -->
+    <!-- _`&lt;emphasis&gt;`: ../doctree.html#emphasis -->
+    <!-- _`&lt;enumerated_list&gt;`: ../doctree.html#enumerated-list -->
+    <!-- _`&lt;field&gt;`: ../doctree.html#field -->
+    <!-- _`&lt;field_body&gt;`: ../doctree.html#field-body -->
+    <!-- _`&lt;field_list&gt;`: ../doctree.html#field-list -->
+    <!-- _`&lt;field_name&gt;`: ../doctree.html#field-name -->
+    <!-- _`&lt;footnote&gt;`: ../doctree.html#footnote -->
+    <!-- _`&lt;footnote_reference&gt;`: ../doctree.html#footnote-reference -->
+    <!-- _`&lt;label&gt;`: ../doctree.html#label -->
+    <!-- _`&lt;line&gt;`: ../doctree.html#line -->
+    <!-- _`&lt;line_block&gt;`: ../doctree.html#line-block -->
+    <!-- _`&lt;list_item&gt;`: ../doctree.html#list-item -->
+    <!-- _`&lt;literal&gt;`: ../doctree.html#literal -->
+    <!-- _`&lt;literal_block&gt;`: ../doctree.html#literal-block -->
+    <!-- _`&lt;option&gt;`: ../doctree.html#option -->
+    <!-- _`&lt;option_argument&gt;`: ../doctree.html#option-argument -->
+    <!-- _`&lt;option_group&gt;`: ../doctree.html#option-group -->
+    <!-- _`&lt;option_list&gt;`: ../doctree.html#option-list -->
+    <!-- _`&lt;option_list_item&gt;`: ../doctree.html#option-list-item -->
+    <!-- _`&lt;option_string&gt;`: ../doctree.html#option-string -->
+    <!-- _`&lt;organization&gt;`: ../doctree.html#organization -->
+    <!-- _`&lt;paragraph&gt;`: ../doctree.html#paragraph -->
+    <!-- _`&lt;problematic&gt;`: ../doctree.html#problematic -->
+    <!-- _`&lt;reference&gt;`: ../doctree.html#reference -->
+    <!-- _`&lt;revision&gt;`: ../doctree.html#revision -->
+    <!-- _`&lt;row&gt;`: ../doctree.html#row -->
+    <!-- _`&lt;section&gt;`: ../doctree.html#section -->
+    <!-- _`&lt;status&gt;`: ../doctree.html#status -->
+    <!-- _`&lt;strong&gt;`: ../doctree.html#strong -->
+    <!-- _`&lt;substitution_definition&gt;`: ../doctree.html#substitution-definition -->
+    <!-- _`&lt;substitution_reference&gt;`: ../doctree.html#substitution-reference -->
+    <!-- _`&lt;system_message&gt;`: ../doctree.html#system-message -->
+    <!-- _`&lt;table&gt;`: ../doctree.html#table -->
+    <!-- _`&lt;target&gt;`: ../doctree.html#target -->
+    <!-- _`&lt;tbody&gt;`: ../doctree.html#tbody -->
+    <!-- _`&lt;term&gt;`: ../doctree.html#term -->
+    <!-- _`&lt;tgroup&gt;`: ../doctree.html#tgroup -->
+    <!-- _`&lt;thead&gt;`: ../doctree.html#thead -->
+    <!-- _`&lt;title&gt;`: ../doctree.html#title -->
+    <!-- _`&lt;topic&gt;`: ../doctree.html#topic -->
+    <!-- _`&lt;transition&gt;`: ../doctree.html#transition -->
+    <!-- _`&lt;version&gt;`: ../doctree.html#version -->
+    <!-- _&#34;classes&#34; attribute:  ../doctree.html#classes -->
+    <!-- _identifier key: ../doctree.html#identifiers -->
+    <!-- _`measure`: ../doctree.html#measure -->
+    <!-- _metadata title: ../doctree.html#title-attribute -->
+    <!-- _Docutils Generic DTD: ../docutils.dtd -->
+    <!-- _Docutils Internationalization: ../../howto/i18n.html -->
+    <!-- _PEP 258: ../../peps/pep-0258.html -->
+    <!-- _writer: -->
+    <!-- _writers: ../../peps/pep-0258.html#writers -->
+    <!-- _transforms: ../../api/transforms.html -->
+    <!-- _DocTitle transform: ../../api/transforms.html#doctitle -->
+    <!-- _DocInfo transform: ../../api/transforms.html#docinfo -->
+    <!-- _PreBibliographic Elements: -->
+    <!-- external -->
+    <!-- _doctest module: https://docs.python.org/3/library/doctest.html -->
+    <!-- _Emacs table mode: http://table.sourceforge.net/ -->
+    <!-- _getopt.py: https://docs.python.org/3/library/getopt.html -->
+    <!-- _GNU libc getopt_long(): -->
+    <!-- _Grouch: http://www.mems-exchange.org/software/grouch/ -->
+    <!-- _HTML Techniques for Web Content Accessibility Guidelines: -->
+    <!-- _Official IANA Registry of URI Schemes: -->
+    <!-- _Retired Index of WWW Addressing Schemes: -->
+    <!-- _RFC822: https://www.rfc-editor.org/rfc/rfc822 -->
+    <!-- _RFC3986: https://www.rfc-editor.org/rfc/rfc3986 -->
+    <!-- _URI-references: -->
+    <!-- _URI-reference: https://www.rfc-editor.org/rfc/rfc3986.html#section-4.1 -->
+    <!-- _World Wide Web Consortium: https://www.w3.org/ -->
+    <!-- _Zope: http://www.zope.com/ -->
+    <!--  Emacs settings -->
   </body>
 </html>

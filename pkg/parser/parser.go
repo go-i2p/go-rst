@@ -36,6 +36,7 @@ func (p *Parser) Parse(content string) []nodes.Node {
 	var currentNode nodes.Node
 	var prevToken Token
 	p.nodes = make([]nodes.Node, 0) // Clear existing nodes
+	p.context.Reset()               // Reset parser context to prevent state pollution between parses
 
 	for scanner.Scan() {
 		line := scanner.Text()

@@ -54,96 +54,98 @@ func (r *HTMLRenderer) renderMeta(nodelist []nodes.Node) {
 func (r *HTMLRenderer) renderNode(node nodes.Node) {
 	switch n := node.(type) {
 	case *nodes.HeadingNode:
-		r.buffer.WriteString(fmt.Sprintf("<h%d>%s</h%d>\n",
-			n.Level(),
-			html.EscapeString(n.Content()),
-			n.Level()))
-
+		r.renderHeading(n)
 	case *nodes.ParagraphNode:
-		r.buffer.WriteString(fmt.Sprintf("<p>%s</p>\n",
-			html.EscapeString(n.Content())))
-
+		r.renderParagraph(n)
 	case *nodes.ListNode:
-		tag := "ul"
-		if n.IsOrdered() {
-			tag = "ol"
-		}
-		r.buffer.WriteString(fmt.Sprintf("<%s>\n", tag))
-		for _, child := range n.Children() {
-			if item, ok := child.(*nodes.ListItemNode); ok {
-				r.buffer.WriteString(fmt.Sprintf("<li>%s</li>\n",
-					html.EscapeString(item.Content())))
-			}
-		}
-		r.buffer.WriteString(fmt.Sprintf("</%s>\n", tag))
-
+		r.renderList(n)
 	case *nodes.LinkNode:
-		r.buffer.WriteString(fmt.Sprintf("<a href=\"%s\" title=\"%s\">%s</a>",
-			html.EscapeString(n.URL()),
-			html.EscapeString(n.Title()),
-			html.EscapeString(n.Content())))
-
+		r.renderLink(n)
 	case *nodes.EmphasisNode:
-		r.buffer.WriteString(fmt.Sprintf("<em>%s</em>",
-			html.EscapeString(n.Content())))
-
+		r.renderEmphasis(n)
 	case *nodes.StrongNode:
-		r.buffer.WriteString(fmt.Sprintf("<strong>%s</strong>",
-			html.EscapeString(n.Content())))
-
+		r.renderStrong(n)
 	case *nodes.CodeNode:
-		r.buffer.WriteString(fmt.Sprintf("<pre><code class=\"language-%s\">%s</code></pre>\n",
-			html.EscapeString(n.Language()),
-			html.EscapeString(n.Content())))
-
+		r.renderCode(n)
 	case *nodes.TableNode:
 		r.renderTable(n)
-
 	case *nodes.DirectiveNode:
 		r.renderDirective(n)
 	case *nodes.BlockQuoteNode:
-		r.buffer.WriteString("<blockquote>")
-		r.buffer.WriteString(html.EscapeString(n.Content()))
-		if attr := n.Attribution(); attr != "" {
-			r.buffer.WriteString("<cite>")
-			r.buffer.WriteString(html.EscapeString(attr))
-			r.buffer.WriteString("</cite>")
-		}
-		r.buffer.WriteString("</blockquote>\n")
+		r.renderBlockQuote(n)
 	case *nodes.DoctestNode:
-		r.buffer.WriteString("<div class=\"doctest\">")
-		r.buffer.WriteString("<pre class=\"doctest-command\">>> ")
-		r.buffer.WriteString(html.EscapeString(n.Command()))
-		r.buffer.WriteString("</pre>")
-		if n.Expected() != "" {
-			r.buffer.WriteString("<pre class=\"doctest-output\">")
-			r.buffer.WriteString(html.EscapeString(n.Expected()))
-			r.buffer.WriteString("</pre>")
-		}
-		r.buffer.WriteString("</div>\n")
+		r.renderDoctest(n)
 	case *nodes.LineBlockNode:
-		r.buffer.WriteString("<div class=\"line-block\">")
-		for _, line := range n.Lines() {
-			r.buffer.WriteString("<div class=\"line\">")
-			r.buffer.WriteString(html.EscapeString(strings.TrimSpace(line)))
-			r.buffer.WriteString("</div>\n")
-		}
-		r.buffer.WriteString("</div>\n")
+		r.renderLineBlock(n)
 	case *nodes.CommentNode:
-		r.buffer.WriteString("<!-- ")
-		r.buffer.WriteString(html.EscapeString(n.Content()))
-		r.buffer.WriteString(" -->\n")
+		r.renderComment(n)
 	case *nodes.TitleNode:
-		r.buffer.WriteString(fmt.Sprintf("<h1 class=\"title\">%s</h1>\n",
-			html.EscapeString(n.Content())))
+		r.renderTitle(n)
 	case *nodes.SubtitleNode:
-		r.buffer.WriteString(fmt.Sprintf("<h2 class=\"subtitle\">%s</h2>\n",
-			html.EscapeString(n.Content())))
+		r.renderSubtitle(n)
 	case *nodes.TransitionNode:
-		r.buffer.WriteString("<hr class=\"docutils\">\n")
+		r.renderTransition(n)
 	}
 }
 
+// renderHeading renders a heading node as HTML.
+func (r *HTMLRenderer) renderHeading(n *nodes.HeadingNode) {
+	r.buffer.WriteString(fmt.Sprintf("<h%d>%s</h%d>\n",
+		n.Level(),
+		html.EscapeString(n.Content()),
+		n.Level()))
+}
+
+// renderParagraph renders a paragraph node as HTML.
+func (r *HTMLRenderer) renderParagraph(n *nodes.ParagraphNode) {
+	r.buffer.WriteString(fmt.Sprintf("<p>%s</p>\n",
+		html.EscapeString(n.Content())))
+}
+
+// renderList renders a list node as HTML.
+func (r *HTMLRenderer) renderList(n *nodes.ListNode) {
+	tag := "ul"
+	if n.IsOrdered() {
+		tag = "ol"
+	}
+	r.buffer.WriteString(fmt.Sprintf("<%s>\n", tag))
+	for _, child := range n.Children() {
+		if item, ok := child.(*nodes.ListItemNode); ok {
+			r.buffer.WriteString(fmt.Sprintf("<li>%s</li>\n",
+				html.EscapeString(item.Content())))
+		}
+	}
+	r.buffer.WriteString(fmt.Sprintf("</%s>\n", tag))
+}
+
+// renderLink renders a link node as HTML.
+func (r *HTMLRenderer) renderLink(n *nodes.LinkNode) {
+	r.buffer.WriteString(fmt.Sprintf("<a href=\"%s\" title=\"%s\">%s</a>",
+		html.EscapeString(n.URL()),
+		html.EscapeString(n.Title()),
+		html.EscapeString(n.Content())))
+}
+
+// renderEmphasis renders an emphasis node as HTML.
+func (r *HTMLRenderer) renderEmphasis(n *nodes.EmphasisNode) {
+	r.buffer.WriteString(fmt.Sprintf("<em>%s</em>",
+		html.EscapeString(n.Content())))
+}
+
+// renderStrong renders a strong node as HTML.
+func (r *HTMLRenderer) renderStrong(n *nodes.StrongNode) {
+	r.buffer.WriteString(fmt.Sprintf("<strong>%s</strong>",
+		html.EscapeString(n.Content())))
+}
+
+// renderCode renders a code node as HTML.
+func (r *HTMLRenderer) renderCode(n *nodes.CodeNode) {
+	r.buffer.WriteString(fmt.Sprintf("<pre><code class=\"language-%s\">%s</code></pre>\n",
+		html.EscapeString(n.Language()),
+		html.EscapeString(n.Content())))
+}
+
+// renderTable renders a table node as HTML.
 func (r *HTMLRenderer) renderTable(table *nodes.TableNode) {
 	r.buffer.WriteString("<table>\n")
 
@@ -170,6 +172,7 @@ func (r *HTMLRenderer) renderTable(table *nodes.TableNode) {
 	r.buffer.WriteString("</tbody></table>\n")
 }
 
+// renderDirective renders a directive node as HTML.
 func (r *HTMLRenderer) renderDirective(directive *nodes.DirectiveNode) {
 	switch directive.Name() {
 	case "image":
@@ -191,6 +194,67 @@ func (r *HTMLRenderer) renderDirective(directive *nodes.DirectiveNode) {
 		r.buffer.WriteString(fmt.Sprintf("<div class=\"warning\">%s</div>\n",
 			html.EscapeString(directive.RawContent())))
 	}
+}
+
+// renderBlockQuote renders a block quote node as HTML.
+func (r *HTMLRenderer) renderBlockQuote(n *nodes.BlockQuoteNode) {
+	r.buffer.WriteString("<blockquote>")
+	r.buffer.WriteString(html.EscapeString(n.Content()))
+	if attr := n.Attribution(); attr != "" {
+		r.buffer.WriteString("<cite>")
+		r.buffer.WriteString(html.EscapeString(attr))
+		r.buffer.WriteString("</cite>")
+	}
+	r.buffer.WriteString("</blockquote>\n")
+}
+
+// renderDoctest renders a doctest node as HTML.
+func (r *HTMLRenderer) renderDoctest(n *nodes.DoctestNode) {
+	r.buffer.WriteString("<div class=\"doctest\">")
+	r.buffer.WriteString("<pre class=\"doctest-command\">>> ")
+	r.buffer.WriteString(html.EscapeString(n.Command()))
+	r.buffer.WriteString("</pre>")
+	if n.Expected() != "" {
+		r.buffer.WriteString("<pre class=\"doctest-output\">")
+		r.buffer.WriteString(html.EscapeString(n.Expected()))
+		r.buffer.WriteString("</pre>")
+	}
+	r.buffer.WriteString("</div>\n")
+}
+
+// renderLineBlock renders a line block node as HTML.
+func (r *HTMLRenderer) renderLineBlock(n *nodes.LineBlockNode) {
+	r.buffer.WriteString("<div class=\"line-block\">")
+	for _, line := range n.Lines() {
+		r.buffer.WriteString("<div class=\"line\">")
+		r.buffer.WriteString(html.EscapeString(strings.TrimSpace(line)))
+		r.buffer.WriteString("</div>\n")
+	}
+	r.buffer.WriteString("</div>\n")
+}
+
+// renderComment renders a comment node as HTML.
+func (r *HTMLRenderer) renderComment(n *nodes.CommentNode) {
+	r.buffer.WriteString("<!-- ")
+	r.buffer.WriteString(html.EscapeString(n.Content()))
+	r.buffer.WriteString(" -->\n")
+}
+
+// renderTitle renders a title node as HTML.
+func (r *HTMLRenderer) renderTitle(n *nodes.TitleNode) {
+	r.buffer.WriteString(fmt.Sprintf("<h1 class=\"title\">%s</h1>\n",
+		html.EscapeString(n.Content())))
+}
+
+// renderSubtitle renders a subtitle node as HTML.
+func (r *HTMLRenderer) renderSubtitle(n *nodes.SubtitleNode) {
+	r.buffer.WriteString(fmt.Sprintf("<h2 class=\"subtitle\">%s</h2>\n",
+		html.EscapeString(n.Content())))
+}
+
+// renderTransition renders a transition node as HTML.
+func (r *HTMLRenderer) renderTransition(n *nodes.TransitionNode) {
+	r.buffer.WriteString("<hr class=\"docutils\">\n")
 }
 
 // RenderPretty renders the given nodes as pretty-formatted HTML.

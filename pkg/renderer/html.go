@@ -85,6 +85,12 @@ func (r *HTMLRenderer) renderNode(node nodes.Node) {
 		r.renderSubtitle(n)
 	case *nodes.TransitionNode:
 		r.renderTransition(n)
+	case *nodes.FootnoteNode:
+		r.renderFootnote(n)
+	case *nodes.DefinitionListNode:
+		r.renderDefinitionList(n)
+	case *nodes.FieldListNode:
+		r.renderFieldList(n)
 	}
 }
 
@@ -255,6 +261,74 @@ func (r *HTMLRenderer) renderSubtitle(n *nodes.SubtitleNode) {
 // renderTransition renders a transition node as HTML.
 func (r *HTMLRenderer) renderTransition(n *nodes.TransitionNode) {
 	r.buffer.WriteString("<hr class=\"docutils\">\n")
+}
+
+// renderFootnote renders a footnote node as HTML.
+// It creates a footnote reference with a link to the footnote definition.
+func (r *HTMLRenderer) renderFootnote(n *nodes.FootnoteNode) {
+	label := html.EscapeString(n.Label())
+	content := html.EscapeString(n.Content())
+
+	if n.IsAutoNumber() {
+		// Auto-numbered footnote
+		r.buffer.WriteString(fmt.Sprintf(
+			"<div class=\"footnote\" id=\"footnote-%s\">\n"+
+				"<span class=\"label\">%s</span> %s\n"+
+				"</div>\n",
+			label, label, content))
+	} else {
+		// Named or numbered footnote
+		r.buffer.WriteString(fmt.Sprintf(
+			"<div class=\"footnote\" id=\"footnote-%s\">\n"+
+				"<span class=\"label\">[%s]</span> %s\n"+
+				"</div>\n",
+			label, label, content))
+	}
+}
+
+// renderDefinitionList renders a definition list node as HTML.
+// It creates a <dl> element with <dt> terms and <dd> definitions.
+func (r *HTMLRenderer) renderDefinitionList(n *nodes.DefinitionListNode) {
+	if n.Count() == 0 {
+		return
+	}
+
+	r.buffer.WriteString("<dl>\n")
+
+	terms := n.Terms()
+	definitions := n.Definitions()
+
+	for i := 0; i < n.Count(); i++ {
+		term := html.EscapeString(terms[i])
+		definition := html.EscapeString(definitions[i])
+
+		r.buffer.WriteString(fmt.Sprintf("<dt>%s</dt>\n", term))
+		r.buffer.WriteString(fmt.Sprintf("<dd>%s</dd>\n", definition))
+	}
+
+	r.buffer.WriteString("</dl>\n")
+}
+
+// renderFieldList renders a field list node as HTML.
+// It creates a table structure for metadata fields with proper semantic markup.
+func (r *HTMLRenderer) renderFieldList(n *nodes.FieldListNode) {
+	if !n.HasFields() {
+		return
+	}
+
+	r.buffer.WriteString("<table class=\"docinfo\">\n<tbody>\n")
+
+	for key, value := range n.Fields() {
+		escapedKey := html.EscapeString(key)
+		escapedValue := html.EscapeString(value)
+
+		r.buffer.WriteString(fmt.Sprintf(
+			"<tr><th class=\"docinfo-name\">%s:</th>\n"+
+				"<td>%s</td></tr>\n",
+			escapedKey, escapedValue))
+	}
+
+	r.buffer.WriteString("</tbody>\n</table>\n")
 }
 
 // RenderPretty renders the given nodes as pretty-formatted HTML.

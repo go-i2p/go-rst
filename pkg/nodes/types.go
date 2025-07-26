@@ -7,24 +7,27 @@ type NodeType int
 
 // Node type constants define the possible types of nodes in the RST document tree
 const (
-	NodeHeading    NodeType = iota // Represents a section heading
-	NodeParagraph                  // Represents a text paragraph
-	NodeList                       // Represents an ordered or unordered list
-	NodeListItem                   // Represents an item within a list
-	NodeLink                       // Represents a hyperlink
-	NodeEmphasis                   // Represents emphasized (italic) text
-	NodeStrong                     // Represents strong (bold) text
-	NodeMeta                       // Represents metadata information
-	NodeDirective                  // Represents an RST directive
-	NodeCode                       // Represents a code block
-	NodeTable                      // Represents a table structure
-	NodeBlockQuote                 // Represents a block quote
-	NodeDoctest                    // Represents a doctest block
-	NodeLineBlock                  // Represents a line block
-	NodeComment                    // Represents a comment
-	NodeTitle                      // Represents a document title
-	NodeSubtitle                   // Represents a document subtitle
-	NodeTransition
+	NodeHeading        NodeType = iota // Represents a section heading
+	NodeParagraph                      // Represents a text paragraph
+	NodeList                           // Represents an ordered or unordered list
+	NodeListItem                       // Represents an item within a list
+	NodeLink                           // Represents a hyperlink
+	NodeEmphasis                       // Represents emphasized (italic) text
+	NodeStrong                         // Represents strong (bold) text
+	NodeMeta                           // Represents metadata information
+	NodeDirective                      // Represents an RST directive
+	NodeCode                           // Represents a code block
+	NodeTable                          // Represents a table structure
+	NodeBlockQuote                     // Represents a block quote
+	NodeDoctest                        // Represents a doctest block
+	NodeLineBlock                      // Represents a line block
+	NodeComment                        // Represents a comment
+	NodeTitle                          // Represents a document title
+	NodeSubtitle                       // Represents a document subtitle
+	NodeTransition                     // Represents a transition element
+	NodeFootnote                       // Represents a footnote
+	NodeDefinitionList                 // Represents a definition list
+	NodeFieldList                      // Represents a field list for metadata
 )
 
 // Node interface defines the common behavior for all RST document nodes

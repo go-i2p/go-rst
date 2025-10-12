@@ -1,7 +1,7 @@
 # go-rst
 
 **WARNING: This repository contains significant amounts of LLM-generated code.**
-**Use of LLMS has not been limited to review and documentation writing.**
+**Use of LLMS has not been limited to review and documentation writing in this repository.**
 **LLMs have written code here.**
 **They were not allowed to proceed in unstructured ways, and we do understand the codebase.**
 

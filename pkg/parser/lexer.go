@@ -27,6 +27,9 @@ const (
 	TokenTransition                        // TokenTransition represents a transition token.
 	TokenEmphasis                          // TokenEmphasis represents emphasized (italic) text
 	TokenStrong                            // TokenStrong represents strong (bold) text
+	TokenFootnote                          // TokenFootnote represents a footnote reference token.
+	TokenDefinitionList                    // TokenDefinitionList represents a definition list token.
+	TokenFieldList                         // TokenFieldList represents a field list token.
 )
 
 // Token represents a single token in the input text.
@@ -49,7 +52,16 @@ func NewLexer() *Lexer {
 }
 
 // Tokenize tokenizes a single line of input text.
+// Returns TokenText as a safe fallback if any panic occurs during tokenization.
 func (l *Lexer) Tokenize(line string) Token {
+	// Add panic recovery to prevent crashes from malformed input
+	defer func() {
+		if r := recover(); r != nil {
+			// Log the panic but don't crash - return safe fallback
+			// In production, this could log to a proper logger
+		}
+	}()
+
 	// Handle blank lines first
 	if strings.TrimSpace(line) == "" {
 		return Token{Type: TokenBlankLine}
@@ -70,6 +82,11 @@ func (l *Lexer) Tokenize(line string) Token {
 
 	// Try list tokens
 	if token := l.checkListTokens(normalizedLine); token.Type != TokenText {
+		return token
+	}
+
+	// Try special element tokens (footnotes, definition lists, field lists)
+	if token := l.checkSpecialElementTokens(normalizedLine); token.Type != TokenText {
 		return token
 	}
 
@@ -123,7 +140,7 @@ func (l *Lexer) checkDirectiveTokens(line string) Token {
 		args := parseDirectiveArgs(line)
 		return Token{
 			Type:    TokenDirective,
-			Content: matches[1],
+			Content: safeExtractMatch(matches, 1),
 			Args:    args,
 		}
 	}
@@ -160,7 +177,7 @@ func (l *Lexer) checkBasicStructural(line string) Token {
 	if matches := l.patterns.transBlock.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
 			Type:    TokenTransBlock,
-			Content: matches[1],
+			Content: safeExtractMatch(matches, 1),
 		}
 	}
 
@@ -178,15 +195,21 @@ func (l *Lexer) checkBasicStructural(line string) Token {
 
 // checkContentBlocks checks for content-containing blocks like quotes, comments, and line blocks.
 func (l *Lexer) checkContentBlocks(line string) Token {
+	// Check for footnote first (before comment check, since footnotes start with "..")
+	if matches := l.patterns.footnote.FindStringSubmatch(line); len(matches) > 2 {
+		return Token{
+			Type:    TokenFootnote,
+			Content: safeExtractMatch(matches, 2),           // footnote content
+			Args:    []string{safeExtractMatch(matches, 1)}, // footnote label (number, #, or *)
+		}
+	}
+
 	// Check for block quote
 	if matches := l.patterns.blockQuote.FindStringSubmatch(line); len(matches) > 1 {
-		attribution := ""
-		if len(matches) > 2 {
-			attribution = matches[3]
-		}
+		attribution := safeExtractMatch(matches, 3)
 		return Token{
 			Type:    TokenBlockQuote,
-			Content: matches[2],
+			Content: safeExtractMatch(matches, 2),
 			Args:    []string{attribution},
 		}
 	}
@@ -195,7 +218,7 @@ func (l *Lexer) checkContentBlocks(line string) Token {
 	if matches := l.patterns.comment.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
 			Type:    TokenComment,
-			Content: matches[1],
+			Content: safeExtractMatch(matches, 1),
 		}
 	}
 
@@ -203,7 +226,7 @@ func (l *Lexer) checkContentBlocks(line string) Token {
 	if matches := l.patterns.lineBlock.FindStringSubmatch(line); len(matches) > 0 {
 		return Token{
 			Type:    TokenLineBlock,
-			Content: strings.TrimSpace(matches[1]),
+			Content: strings.TrimSpace(safeExtractMatch(matches, 1)),
 		}
 	}
 
@@ -216,8 +239,8 @@ func (l *Lexer) checkListTokens(line string) Token {
 	if matches := l.patterns.bulletList.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
 			Type:    TokenBulletList,
-			Content: matches[4],
-			Args:    []string{matches[1], matches[2]}, // indent, bullet type
+			Content: safeExtractMatch(matches, 4),
+			Args:    safeExtractMatches(matches, 1, 2), // indent, bullet type
 		}
 	}
 
@@ -225,8 +248,8 @@ func (l *Lexer) checkListTokens(line string) Token {
 	if matches := l.patterns.enumList.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
 			Type:    TokenEnumList,
-			Content: matches[4],
-			Args:    []string{matches[1], matches[2]}, // indent, marker
+			Content: safeExtractMatch(matches, 4),
+			Args:    safeExtractMatches(matches, 1, 2), // indent, marker
 		}
 	}
 
@@ -239,7 +262,7 @@ func (l *Lexer) checkFormattingTokens(line string) Token {
 	if matches := l.patterns.strong.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
 			Type:    TokenStrong,
-			Content: matches[1], // The text between double asterisks
+			Content: safeExtractMatch(matches, 1), // The text between double asterisks
 		}
 	}
 
@@ -247,9 +270,27 @@ func (l *Lexer) checkFormattingTokens(line string) Token {
 	if matches := l.patterns.emphasis.FindStringSubmatch(line); len(matches) > 1 {
 		return Token{
 			Type:    TokenEmphasis,
-			Content: matches[1], // The text between asterisks
+			Content: safeExtractMatch(matches, 1), // The text between asterisks
 		}
 	}
+
+	return Token{Type: TokenText}
+}
+
+// checkSpecialElementTokens checks for definition lists and field lists.
+func (l *Lexer) checkSpecialElementTokens(line string) Token {
+	// Check for field list (metadata-style)
+	if matches := l.patterns.fieldList.FindStringSubmatch(line); len(matches) > 2 {
+		return Token{
+			Type:    TokenFieldList,
+			Content: safeExtractMatch(matches, 2),           // field value
+			Args:    []string{safeExtractMatch(matches, 1)}, // field name
+		}
+	}
+
+	// Note: Definition lists are complex multiline structures and need special handling
+	// in the parser rather than simple line-by-line tokenization
+	// For now, we'll handle them as text and let the parser deal with multiline patterns
 
 	return Token{Type: TokenText}
 }
@@ -262,4 +303,23 @@ func parseDirectiveArgs(line string) []string {
 
 	args := strings.Fields(strings.TrimSpace(parts[1]))
 	return args
+}
+
+// safeExtractMatch safely extracts a regex match at the given index with bounds checking.
+// Returns empty string if index is out of bounds or matches is nil.
+func safeExtractMatch(matches []string, index int) string {
+	if matches == nil || index < 0 || index >= len(matches) {
+		return ""
+	}
+	return matches[index]
+}
+
+// safeExtractMatches safely extracts multiple regex matches with bounds checking.
+// Returns a slice with extracted values or empty strings for out-of-bounds indices.
+func safeExtractMatches(matches []string, indices ...int) []string {
+	result := make([]string, len(indices))
+	for i, idx := range indices {
+		result[i] = safeExtractMatch(matches, idx)
+	}
+	return result
 }

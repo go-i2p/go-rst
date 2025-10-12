@@ -26,6 +26,9 @@ type Patterns struct {
 	transition       *regexp.Regexp
 	bulletList       *regexp.Regexp
 	enumList         *regexp.Regexp
+	footnote         *regexp.Regexp
+	definitionList   *regexp.Regexp
+	fieldList        *regexp.Regexp
 }
 
 // NewPatterns initializes and returns a new instance of Patterns with compiled regular expressions.
@@ -49,5 +52,12 @@ func NewPatterns() *Patterns {
 		enumList:         regexp.MustCompile(`^(\s*)(\d+|[a-zA-Z]|[ivxlcdm]+|[IVXLCDM]+|#)(\.\s+)(.+)$`),
 		emphasis:         regexp.MustCompile(`\*([^*]+)\*`),
 		strong:           regexp.MustCompile(`\*\*([^*]+)\*\*`),
+		// NOTE: This pattern handles single-line numeric, auto-numbered (#), or symbol (*) footnotes only
+		// Multi-line or named footnotes are not supported by this simple pattern
+		footnote: regexp.MustCompile(`^\.\. \[(\d+|#|\*)\] (.+)$`),
+		// NOTE: This regex does not handle multi-line definitions or nested terms
+		// Future enhancement: Improve pattern to support multi-line and nested definitions
+		definitionList: regexp.MustCompile(`^(\S.+)\n\s+(.+)$`),
+		fieldList:      regexp.MustCompile(`^:([^:]+):\s*(.*)$`),
 	}
 }

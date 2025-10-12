@@ -63,8 +63,8 @@ func (r *PDFRenderer) renderNode(node nodes.Node) error {
 		return r.renderDirective(n)
 	case *nodes.StrongNode:
 		return r.renderStrong(n)
-	//case *nodes.EmphasisNode:
-	//return r.renderEmphasis(n)
+	// case *nodes.EmphasisNode:
+	// return r.renderEmphasis(n)
 	default:
 		return r.renderChildren(node)
 	}

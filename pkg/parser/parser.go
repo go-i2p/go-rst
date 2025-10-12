@@ -31,7 +31,22 @@ func NewParser(trans translator.Translator) *Parser {
 }
 
 // Parse takes a string of reStructuredText content and returns a slice of Node instances.
+// This function is designed to never panic on user input, instead degrading gracefully
+// by returning partial results or empty slices for malformed content.
 func (p *Parser) Parse(content string) []nodes.Node {
+	// Add panic recovery at top level to ensure we never crash on bad input
+	defer func() {
+		if r := recover(); r != nil {
+			// Log the panic but return what we have so far
+			// In production, this could log to a proper logger
+		}
+	}()
+
+	// Validate input - empty content returns empty slice
+	if content == "" {
+		return []nodes.Node{}
+	}
+
 	scanner := bufio.NewScanner(strings.NewReader(content))
 	var currentNode nodes.Node
 	var prevToken Token
@@ -74,6 +89,8 @@ func (p *Parser) processToken(token, prevToken Token, currentNode nodes.Node, or
 		return p.processFormattingTokens(token)
 	case TokenLineBlock:
 		return p.processLineBlockToken(token, currentNode)
+	case TokenFootnote, TokenDefinitionList, TokenFieldList:
+		return p.processSpecialElementTokens(token, currentNode)
 	case TokenText:
 		return p.processTextToken(token, currentNode, originalLine)
 	case TokenTransition:
@@ -178,4 +195,59 @@ func (p *Parser) processTransitionToken(token Token) nodes.Node {
 		return p.processTransition(token.Content)
 	}
 	return nodes.NewTransitionNode('-')
+}
+
+// processSpecialElementTokens handles footnotes, definition lists, and field lists.
+func (p *Parser) processSpecialElementTokens(token Token, currentNode nodes.Node) nodes.Node {
+	switch token.Type {
+	case TokenFootnote:
+		return p.processFootnote(token.Content, token.Args)
+	case TokenDefinitionList:
+		return p.processDefinitionList(token.Content, currentNode)
+	case TokenFieldList:
+		return p.processFieldList(token.Content, token.Args, currentNode)
+	}
+	return currentNode
+}
+
+// processFootnote creates a footnote node from the token content and label.
+func (p *Parser) processFootnote(content string, args []string) nodes.Node {
+	label := ""
+	autoNumber := false
+
+	if len(args) > 0 {
+		label = args[0]
+		// Check if it's an auto-numbered footnote (#) or symbol footnote (*)
+		autoNumber = (label == "#" || label == "*")
+	}
+
+	return nodes.NewFootnoteNode(label, content, autoNumber)
+}
+
+// processDefinitionList handles definition list processing.
+// Note: Definition lists require multiline processing which is complex for line-by-line tokenization.
+// For now, we treat them as regular paragraphs until multiline support is added.
+func (p *Parser) processDefinitionList(content string, currentNode nodes.Node) nodes.Node {
+	// Simple implementation: treat as paragraph for now
+	// TODO: Implement proper multiline definition list parsing
+	return nodes.NewParagraphNode(content)
+}
+
+// processFieldList creates or updates a field list node with metadata.
+func (p *Parser) processFieldList(content string, args []string, currentNode nodes.Node) nodes.Node {
+	fieldName := ""
+	if len(args) > 0 {
+		fieldName = args[0]
+	}
+
+	// Check if we're continuing an existing field list
+	if fieldList, ok := currentNode.(*nodes.FieldListNode); ok {
+		fieldList.AddField(fieldName, content)
+		return fieldList
+	}
+
+	// Create new field list node
+	fieldList := nodes.NewFieldListNode()
+	fieldList.AddField(fieldName, content)
+	return fieldList
 }

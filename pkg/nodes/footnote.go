@@ -17,7 +17,7 @@ type FootnoteNode struct {
 //
 // Returns:
 //   - *FootnoteNode: A new footnote node instance
-func NewFootnoteNode(label string, content string, autoNumber bool) *FootnoteNode {
+func NewFootnoteNode(label, content string, autoNumber bool) *FootnoteNode {
 	node := &FootnoteNode{
 		BaseNode:   NewBaseNode(NodeFootnote),
 		label:      label,

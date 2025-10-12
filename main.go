@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/go-i2p/go-rst/pkg/nodes"
 	"github.com/go-i2p/go-rst/pkg/parser"
@@ -71,7 +71,7 @@ func validateInputFlags(config Configuration) {
 
 // readRSTFile reads and returns RST file content
 func readRSTFile(rstFile string, debug bool) []byte {
-	content, err := ioutil.ReadFile(rstFile)
+	content, err := os.ReadFile(rstFile)
 	if err != nil {
 		log.Fatalf("Failed to read RST file: %v", err)
 	}
@@ -158,7 +158,7 @@ func renderMarkdown(nodes []nodes.Node, outFile string) {
 
 func WriteRendered(outFile string, doc []byte) {
 	// Write output
-	err := ioutil.WriteFile(outFile, []byte(doc), 0o644)
+	err := os.WriteFile(outFile, []byte(doc), 0o644)
 	if err != nil {
 		log.Fatalf("Failed to write HTML file: %v", err)
 	}

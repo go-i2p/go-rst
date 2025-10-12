@@ -1,5 +1,10 @@
 # go-rst
 
+**WARNING: This repository contains significant amounts of LLM-generated code.**
+**Use of LLMS has not been limited to review and documentation writing.**
+**LLMs have written code here.**
+**They were not allowed to proceed in unstructured ways, and we do understand the codebase.**
+
 A Go library for parsing and rendering reStructuredText (RST) documents with translation support.
 Supports only a subset of restructuredText for now, but relatively easy to expand compared to other attempts.
 It is mostly unrelated to previous attempts to parse restructuredText in Go.
@@ -32,7 +37,7 @@ package main
 
 import (
     "fmt"
-    "io/ioutil"
+    "os"
     
     "github.com/go-i2p/go-rst/pkg/parser"
     "github.com/go-i2p/go-rst/pkg/renderer"
@@ -41,7 +46,7 @@ import (
 
 func main() {
     // Read RST content
-    content, err := ioutil.ReadFile("doc.rst")
+    content, err := os.ReadFile("doc.rst")
     if err != nil {
         panic(err)
     }

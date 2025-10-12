@@ -1,6 +1,9 @@
 package translator
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/leonelquinteros/gotext"
 )
 
@@ -23,6 +26,11 @@ func NewPOTranslator(poFile string) (*POTranslator, error) {
 	// If no PO file is provided, return a pass-through translator
 	if poFile == "" {
 		return translator, nil
+	}
+
+	// Verify PO file exists before attempting to parse
+	if _, err := os.Stat(poFile); err != nil {
+		return nil, fmt.Errorf("PO file not accessible: %w", err)
 	}
 
 	// Parse PO file

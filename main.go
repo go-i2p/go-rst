@@ -65,7 +65,7 @@ func validateInputFlags(config Configuration) {
 		log.Fatal("Please provide an input RST file using -rst flag")
 	}
 	if config.outFile == "" {
-		log.Fatal("Please provide an output HTML file using -out flag")
+		log.Fatal("Please provide an output file using -out flag")
 	}
 }
 
